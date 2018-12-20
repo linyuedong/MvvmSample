@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MvvmSample</string>
+    <string name="title_activity_binding">BindingActivity</string>
+</resources>
