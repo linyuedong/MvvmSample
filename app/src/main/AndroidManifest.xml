@@ -21,6 +21,10 @@
             android:label="@string/title_activity_binding"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".databinding.HomeActivity"
+            android:label="@string/title_activity_home">
+        </activity>
     </application>
 
 </manifest>

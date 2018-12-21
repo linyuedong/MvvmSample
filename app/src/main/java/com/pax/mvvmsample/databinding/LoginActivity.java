@@ -1,5 +1,6 @@
 package com.pax.mvvmsample.databinding;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -26,6 +27,11 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+
     }
 
+    public  void startActivity(Class cla){
+        startActivity(new Intent(LoginActivity.this,cla));
+    }
 }

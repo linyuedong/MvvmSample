@@ -26,14 +26,11 @@ public class MainActivity extends AppCompatActivity {
         Button bt1 = (Button) findViewById(R.id.bt1);
         final TextView tv1 = (TextView) findViewById(R.id.tv1);
         Button bt2 = findViewById(R.id.bt2);
-        bt2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
-            }
-        });
+
+        //LifeCycle
         getLifecycle().addObserver(new MyObserver());
 
+        //ViewModel
         final MyModel myModel = ViewModelProviders.of(this).get(MyModel.class);
         myModel.getMessage().observe(this, new Observer<String>() {
             @Override
@@ -49,11 +46,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //LiveData
         MyLiveData.getInstance().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 tv1.setText(s);
             }
         });
+
+
+        bt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            }
+        });
     }
+
+
+
 }
