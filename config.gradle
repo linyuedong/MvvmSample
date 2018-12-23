@@ -1,6 +1,6 @@
 ext{
     android = [
-            compileSdkVersion: 26,
+            compileSdkVersion: 28,
             buildToolsVersion: "28.0.2",
             applicationId    : "com.pax.mvvmsample",
             minSdkVersion    : 19,
