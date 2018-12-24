@@ -63,10 +63,10 @@ public class RetrofitHelper {
     }
 
 
-    public static<T> T create(Class<T> clazz){
+    public static<T> T create(String baseUrl , Class<T> clazz){
         Retrofit retrofit=new Retrofit.Builder()
                 .client(getOkHttpClient())
-                .baseUrl("http://wanandroid.com/")
+                .baseUrl(baseUrl)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
