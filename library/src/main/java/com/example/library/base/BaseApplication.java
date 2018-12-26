@@ -4,9 +4,17 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.library.Utils.LogUtlis;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.BuildConfig;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.LogStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 
 public class BaseApplication extends Application {
 
@@ -18,7 +26,22 @@ public class BaseApplication extends Application {
         super.onCreate();
         mApplication = this;
         initDebugStatus();
+        initLogger();
         initActivityLifecycle();
+    }
+
+    private void initLogger() {
+        Logger.addLogAdapter(new AndroidLogAdapter(PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)
+                .tag("abc")
+                .build()));
+        Logger.addLogAdapter(new AndroidLogAdapter() {
+            @Override public boolean isLoggable(int priority, String tag) {
+                 return BuildConfig.DEBUG;
+            }
+        });
+
+
     }
 
 
@@ -28,7 +51,7 @@ public class BaseApplication extends Application {
 
     private void initDebugStatus() {
         debug = getApplicationInfo() != null && (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
-        Log.i("aa","debug = " + debug);
+        Log.i("abc","debug = " + debug);
     }
 
 
@@ -36,7 +59,9 @@ public class BaseApplication extends Application {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
-                LogUtlis.d("onCreate : " + activity.getClass().getSimpleName());
+
+                Logger.d("onCreate : " + activity.getClass().getSimpleName());
+                LogUtlis.d("LogUtlis onCreate : " + activity.getClass().getSimpleName());
                 AppManager.getAppManager().addActivity(activity);
             }
 
@@ -67,7 +92,7 @@ public class BaseApplication extends Application {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                LogUtlis.d("onDestroy : " + activity.getClass().getSimpleName());
+                Logger.d("onDestroy : " + activity.getClass().getSimpleName());
                 AppManager.getAppManager().finishActivity(activity);
             }
         });
@@ -76,4 +101,7 @@ public class BaseApplication extends Application {
     public static Application getContext(){
         return mApplication;
     }
+
+
+
 }

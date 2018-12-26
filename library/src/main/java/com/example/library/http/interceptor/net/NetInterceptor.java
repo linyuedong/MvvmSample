@@ -1,7 +1,8 @@
-package com.pax.mvvmsample.http.interceptor.net;
+package com.example.library.http.interceptor.net;
 
 import com.example.library.Utils.LogUtlis;
-import com.pax.mvvmsample.Utils.NetworkUtils;
+import com.example.library.Utils.NetworkUtils;
+
 
 import java.io.IOException;
 

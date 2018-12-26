@@ -99,7 +99,7 @@ public class LogUtlis {
 
 
     private static String generateTag() {
-        StackTraceElement caller = new Throwable().getStackTrace()[4];
+        StackTraceElement caller = new Throwable().getStackTrace()[2];
         String tag = "%s.%s(L:%d)";
         String callerClazzName = caller.getClassName();
         callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);

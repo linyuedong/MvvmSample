@@ -1,4 +1,4 @@
-package com.pax.mvvmsample.http.interceptor.logging;
+package com.example.library.http.interceptor.logging;
 
 import android.text.TextUtils;
 

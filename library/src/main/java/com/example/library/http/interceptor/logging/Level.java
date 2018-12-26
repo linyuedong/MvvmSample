@@ -1,4 +1,4 @@
-package com.pax.mvvmsample.http.interceptor.logging;
+package com.example.library.http.interceptor.logging;
 
 /**
  * @author ihsan on 21/02/2017.

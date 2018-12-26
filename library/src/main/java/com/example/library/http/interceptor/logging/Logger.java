@@ -1,4 +1,4 @@
-package com.pax.mvvmsample.http.interceptor.logging;
+package com.example.library.http.interceptor.logging;
 
 import okhttp3.internal.platform.Platform;
 
