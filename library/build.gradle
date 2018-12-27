@@ -47,6 +47,7 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.5'
 
     //logger
-    api 'com.orhanobut:logger:2.2.0'
+    //api 'com.orhanobut:logger:2.2.0'
+    api 'com.github.naturs.logger:logger-android:0.3'
 
 }

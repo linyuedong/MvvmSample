@@ -3,14 +3,17 @@ package com.pax.mvvmsample;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.library.Utils.LogUtlis;
-import com.orhanobut.logger.Logger;
+
+import com.github.naturs.logger.Logger;
 import com.pax.mvvmsample.Utils.RxUtils;
 import com.pax.mvvmsample.databinding.LoginActivity;
 import com.pax.mvvmsample.http.ApiHelper;
@@ -18,8 +21,9 @@ import com.pax.mvvmsample.http.bean.ThemeListBean;
 import com.pax.mvvmsample.jetpack.MyLiveData;
 import com.pax.mvvmsample.jetpack.MyModel;
 import com.pax.mvvmsample.jetpack.MyObserver;
-
 import io.reactivex.disposables.Disposable;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -119,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         LogUtlis.i(e.getMessage());
-                        Logger.d(e.getMessage());
+
 
 
                     }
@@ -130,8 +134,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        Log.d("aa","cc");
+
+        LogUtlis.d("cc");
+
 
     }
+
+
 
 
 }

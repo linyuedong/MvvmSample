@@ -9,17 +9,17 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.library.Utils.LogUtlis;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.BuildConfig;
-import com.orhanobut.logger.FormatStrategy;
-import com.orhanobut.logger.LogStrategy;
-import com.orhanobut.logger.Logger;
-import com.orhanobut.logger.PrettyFormatStrategy;
+import com.github.naturs.logger.Logger;
+import com.github.naturs.logger.adapter.DefaultLogAdapter;
+import com.github.naturs.logger.android.adapter.AndroidLogAdapter;
+import com.github.naturs.logger.android.strategy.converter.AndroidLogConverter;
+
 
 public class BaseApplication extends Application {
 
     private static Application mApplication;
     private static boolean debug = false;
+    private static final String globleTag = "abc";
 
     @Override
     public void onCreate() {
@@ -31,16 +31,20 @@ public class BaseApplication extends Application {
     }
 
     private void initLogger() {
-        Logger.addLogAdapter(new AndroidLogAdapter(PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(false)
-                .tag("abc")
-                .build()));
-        Logger.addLogAdapter(new AndroidLogAdapter() {
-            @Override public boolean isLoggable(int priority, String tag) {
-                 return BuildConfig.DEBUG;
-            }
-        });
+//        Logger.addLogAdapter(new AndroidLogAdapter(PrettyFormatStrategy.newBuilder()
+//                .showThreadInfo(false)
+//                .tag("abc")
+//                .build()));
+//        Logger.addLogAdapter(new AndroidLogAdapter() {
+//            @Override public boolean isLoggable(int priority, String tag) {
+//                 return BuildConfig.DEBUG;
+//            }
+//        });
 
+        Logger.addLogAdapter(new AndroidLogAdapter(globleTag,false));
+        Logger.setLogConverter(new AndroidLogConverter());
+
+        LogUtlis.setGlobleTag(globleTag);
 
     }
 
@@ -59,9 +63,7 @@ public class BaseApplication extends Application {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
-
-                Logger.d("onCreate : " + activity.getClass().getSimpleName());
-                LogUtlis.d("LogUtlis onCreate : " + activity.getClass().getSimpleName());
+                LogUtlis.d("onCreate : " + activity.getClass().getSimpleName());
                 AppManager.getAppManager().addActivity(activity);
             }
 
@@ -92,7 +94,7 @@ public class BaseApplication extends Application {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                Logger.d("onDestroy : " + activity.getClass().getSimpleName());
+                LogUtlis.d("onActivityDestroyed : " + activity.getClass().getSimpleName());
                 AppManager.getAppManager().finishActivity(activity);
             }
         });

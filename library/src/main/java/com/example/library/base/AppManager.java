@@ -11,9 +11,9 @@ import java.util.Stack;
  */
 public class AppManager {
 
-    private static Stack<Activity> activityStack;
-    private static Stack<Fragment> fragmentStack;
-    private static AppManager instance;
+    private static Stack<Activity> activityStack = null;
+    private static Stack<Fragment> fragmentStack = null;
+    private static AppManager instance = null;
 
     private AppManager() {
     }
@@ -30,11 +30,11 @@ public class AppManager {
         return instance;
     }
 
-    public static Stack<Activity> getActivityStack() {
+    public  Stack<Activity> getActivityStack() {
         return activityStack;
     }
 
-    public static Stack<Fragment> getFragmentStack() {
+    public  Stack<Fragment> getFragmentStack() {
         return fragmentStack;
     }
 
@@ -55,6 +55,7 @@ public class AppManager {
     public void removeActivity(Activity activity) {
         if (activity != null) {
             activityStack.remove(activity);
+            activity = null;
         }
     }
 
@@ -92,6 +93,7 @@ public class AppManager {
         if (activity != null) {
             if (!activity.isFinishing()) {
                 activity.finish();
+                activity = null;
             }
         }
     }

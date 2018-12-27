@@ -2,109 +2,104 @@ package com.example.library.Utils;
 
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.example.library.base.BaseApplication;
+
 
 public class LogUtlis {
 
     private static boolean isDebug = BaseApplication.isDebug();
-    public static String customTagPrefix = "abc";
-
+    public static String customTagPrefix = "";
+    private static final String contentFormat = "[(%s:%d)#%s] >>> %s";
     private LogUtlis(){}
+
+    public static void setGlobleTag(String globleTag){
+        customTagPrefix = globleTag;
+    }
 
     public static void d(String content) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.d(tag, content);
+        Log.d(generateTag(), generateContent(content));
     }
 
     public static void d(String content, Throwable tr) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.d(tag, content, tr);
+        Log.d(generateTag(), generateContent(content), tr);
     }
 
     public static void e(String content) {
         if (!isDebug) return;
-        String tag = generateTag();
-
-        Log.e(tag, content);
+        Log.e(generateTag(), generateContent(content));
     }
 
     public static void e(String content, Throwable tr) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.e(tag, content, tr);
+        Log.e(generateTag(), generateContent(content), tr);
     }
 
     public static void i(String content) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.i(tag, content);
+        Log.i(generateTag(), generateContent(content));
     }
 
     public static void i(String content, Throwable tr) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.i(tag, content, tr);
+        Log.i(generateTag(), generateContent(content), tr);
     }
 
     public static void v(String content) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.v(tag, content);
+        Log.v(generateTag(), generateContent(content));
     }
 
     public static void v(String content, Throwable tr) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.v(tag, content, tr);
+        Log.v(generateTag(), generateContent(content), tr);
     }
 
     public static void w(String content) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.w(tag, content);
+        Log.w(generateTag(), generateContent(content));
     }
 
     public static void w(String content, Throwable tr) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.w(tag, content, tr);
+        Log.w(generateTag(), generateContent(content), tr);
     }
 
     public static void w(Throwable tr) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.w(tag, tr);
+        Log.w(generateTag(), tr);
     }
 
     public static void wtf(String content) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.wtf(tag, content);
+        Log.wtf(generateTag(), generateContent(content));
     }
 
     public static void wtf(String content, Throwable tr) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.wtf(tag, content, tr);
+        Log.wtf(generateTag(), generateContent(content), tr);
     }
 
     public static void wtf(Throwable tr) {
         if (!isDebug) return;
-        String tag = generateTag();
-        Log.wtf(tag, tr);
+        Log.wtf(generateTag(), tr);
     }
 
 
-    private static String generateTag() {
+   private static String generateTag(){
         StackTraceElement caller = new Throwable().getStackTrace()[2];
-        String tag = "%s.%s(L:%d)";
         String callerClazzName = caller.getClassName();
         callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
-        tag = String.format(tag, callerClazzName, caller.getMethodName(), caller.getLineNumber());
-        tag = TextUtils.isEmpty(customTagPrefix) ? tag : customTagPrefix + ":" + tag;
+        String tag = TextUtils.isEmpty(customTagPrefix) ? callerClazzName : customTagPrefix + "-" + callerClazzName;
         return tag;
-    }
+   }
+
+   private static String generateContent(String content){
+        StackTraceElement caller = new Throwable().getStackTrace()[2];
+     return String.format(contentFormat,caller.getFileName(),caller.getLineNumber(),caller.getMethodName(),content);
+   }
+
+
+
 }
