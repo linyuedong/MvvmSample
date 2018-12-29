@@ -2,11 +2,6 @@ package com.pax.mvvmsample.http.api;
 
 
 
-import com.pax.mvvmsample.http.bean.VersionBean;
-import com.pax.mvvmsample.http.response.MyHttpResponse;
-
-import io.reactivex.Flowable;
-import retrofit2.http.GET;
 
 /**
  * Created by codeest on 16/10/10.
@@ -15,15 +10,6 @@ import retrofit2.http.GET;
 
 public interface MyApis {
 
-    String HOST = "http://codeest.me/api/geeknews/";
 
-    String APK_DOWNLOAD_URL = "http://codeest.me/apk/geeknews.apk";
-
-    /**
-     * 获取最新版本信息
-     * @return
-     */
-    @GET("version")
-    Flowable<MyHttpResponse<VersionBean>> getVersionInfo();
 
 }

@@ -1,9 +1,12 @@
 package com.pax.mvvmsample;
 
+
+
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
+
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.library.Utils.LogUtlis;
-
-import com.github.naturs.logger.Logger;
 import com.pax.mvvmsample.Utils.RxUtils;
 import com.pax.mvvmsample.databinding.LoginActivity;
 import com.pax.mvvmsample.http.ApiHelper;
@@ -25,8 +26,9 @@ import io.reactivex.disposables.Disposable;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
+    @SuppressLint("AutoDispose")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,46 +71,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
-
-//        RetrofitHelper.getInstance().getZhihuApis().getDailyList()
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(Schedulers.newThread())
-//                .subscribe(new Consumer<DailyListBean>() {
-//                    @Override
-//            public void accept(DailyListBean dailyListBean) throws Exception {
-//                LogUtlis.d(new Gson().toJson(dailyListBean));
-//            }
-//        });
-
         Test.test();
-
-
-//        RetrofitHelper.getInstance().getGankApis().getRandomGirl(1)
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(Schedulers.newThread())
-//                .subscribe(new Consumer<GankHttpResponse<List<GankItemBean>>>() {
-//                               @Override
-//                               public void accept(GankHttpResponse<List<GankItemBean>> listGankHttpResponse) throws Exception {
-//                                   LogUtlis.d(new Gson().toJson(listGankHttpResponse));
-//                               }
-//                           }
-//                );
-//
-//        RetrofitHelper.getInstance().getZhihuApis().getDailyList()
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(Schedulers.newThread())
-//
-//                .subscribe(new Consumer<DailyListBean>() {
-//                    @Override
-//                    public void accept(DailyListBean dailyListBean) throws Exception {
-//                        LogUtlis.d(new Gson().toJson(dailyListBean));
-//                    }
-//                });
-
-
         ApiHelper.getZhihuApis().getThemeList()
                 .compose(RxUtils.<ThemeListBean>rxSchedulersHelper())
                 .compose(RxUtils.<ThemeListBean>rxErrorHelper())
+                .as(RxUtils.<ThemeListBean>bindLifecycle(this))
                 .subscribe(new io.reactivex.Observer<ThemeListBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -142,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
-
+    }
 }

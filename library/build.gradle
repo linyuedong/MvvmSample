@@ -13,6 +13,7 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+
     }
 
     buildTypes {
@@ -42,6 +43,9 @@ dependencies {
     //rxJava、rxAndroid
     api 'io.reactivex.rxjava2:rxandroid:2.1.0'
     api 'io.reactivex.rxjava2:rxjava:2.2.4'
+    //rxlifecycles
+    api 'com.uber.autodispose:autodispose-android-archcomponents:1.0.0-RC2'
+    api 'com.uber.autodispose:autodispose-rxlifecycle:1.0.0-RC2'
 
     //gson
     api 'com.google.code.gson:gson:2.8.5'
@@ -49,5 +53,14 @@ dependencies {
     //logger
     //api 'com.orhanobut:logger:2.2.0'
     api 'com.github.naturs.logger:logger-android:0.3'
+
+    //jetpack
+//    def lifecycle_version = "2.0.0"
+//    api "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+//    api "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+//    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    api 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
 }

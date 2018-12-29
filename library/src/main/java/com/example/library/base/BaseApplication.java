@@ -19,7 +19,7 @@ public class BaseApplication extends Application {
 
     private static Application mApplication;
     private static boolean debug = false;
-    private static final String globleTag = "abc";
+   ;
 
     @Override
     public void onCreate() {
@@ -41,10 +41,10 @@ public class BaseApplication extends Application {
 //            }
 //        });
 
-        Logger.addLogAdapter(new AndroidLogAdapter(globleTag,false));
+        Logger.addLogAdapter(new AndroidLogAdapter(Constants.globleTag,false));
         Logger.setLogConverter(new AndroidLogConverter());
 
-        LogUtlis.setGlobleTag(globleTag);
+        LogUtlis.setGlobleTag(Constants.globleTag);
 
     }
 
