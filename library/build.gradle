@@ -50,6 +50,9 @@ dependencies {
     //rxlifecycles
     api 'com.uber.autodispose:autodispose-android-archcomponents:1.0.0-RC2'
     api 'com.uber.autodispose:autodispose-rxlifecycle:1.0.0-RC2'
+    //rxbinding-recycleview
+    api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0'
+    api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0'
 
     //gson
     api 'com.google.code.gson:gson:2.8.5'
@@ -66,5 +69,9 @@ dependencies {
 
     api 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-18'
+    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-18'//没有使用特殊Header，可以不加这行
+
 
 }

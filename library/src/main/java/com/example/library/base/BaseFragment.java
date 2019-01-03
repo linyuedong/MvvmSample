@@ -16,11 +16,7 @@ public abstract class BaseFragment extends Fragment {
 
     private ViewDataBinding binding;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
 
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
