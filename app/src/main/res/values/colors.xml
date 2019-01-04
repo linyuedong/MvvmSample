@@ -6,4 +6,18 @@
 
     <color name="tab_checked">#ED6A2C</color>
     <color name="tab_unchecked">#757575</color>
+
+    <color name="colorTheme">#ffce3d3a</color>
+    <!--页面背景的颜色-->
+    <color name="color_page_bg">#F1F3F4</color>
+
+    <color name="colorWhite">#ffffffff</color>
+
+    <!--主页tab背景-->
+    <color name="colorTabBg">#ffffffff</color>
+    <color name="colorTabTextCheck">#ffce3d3a</color>
+    <color name="colorTabTextNormal">#585858</color>
+    <color name="colorTabLine">#ffce3d3a</color>
+
+
 </resources>

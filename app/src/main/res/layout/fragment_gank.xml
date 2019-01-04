@@ -8,34 +8,52 @@
 
         <variable
             name="vm"
-            type="com.pax.mvvmsample.databinding.ImageBean"/>
+            type="com.pax.mvvmsample.ui.gank.GankViewModel"/>
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".databinding.GankFragment">
+        tools:context=".ui.gank.GankFragment">
 
-
-        <ImageView
-            android:id="@+id/iv"
-            app:binding_imageUrl="@{vm.url}"
-            android:src="@mipmap/ic_launcher"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_gank"
             android:layout_width="match_parent"
-            android:layout_height="150dp"/>
+            android:layout_height="38dp"
+            app:tabIndicatorColor="@color/colorTabLine"
+            app:tabSelectedTextColor="@color/colorTabTextCheck"
+            app:tabTextColor="@color/colorTabTextNormal" />
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/refreshLayout"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_gank"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"
-                android:background="#fff" />
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        </android.support.v4.view.ViewPager>
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv"-->
+            <!--app:binding_imageUrl="@{vm.url}"-->
+            <!--android:src="@mipmap/ic_launcher"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="150dp"/>-->
+
+        <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+            <!--android:id="@+id/refreshLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/recyclerView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:overScrollMode="never"-->
+                <!--android:background="#fff"-->
+                <!--app:layoutManager="android.support.v7.widget.LinearLayoutManager"-->
+                <!--app:items="@{vm.items}"-->
+                <!--app:itemBinding="@{vm.itemBinding}"-->
+                <!--/>-->
+        <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
 
     </LinearLayout>
 </layout>

@@ -1,10 +1,20 @@
 package com.pax.mvvmsample.app;
 
+import android.content.Context;
 import android.os.SystemClock;
 
 import com.example.library.base.BaseApplication;
 import com.github.moduth.blockcanary.BlockCanary;
 import com.github.moduth.blockcanary.BlockCanaryContext;
+import com.pax.mvvmsample.R;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -14,6 +24,7 @@ public class MyApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         init();
+
     }
 
     private void init() {
@@ -48,4 +59,6 @@ public class MyApplication extends BaseApplication {
         }
 
     }
+
+
 }

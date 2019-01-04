@@ -1,23 +1,21 @@
 package com.pax.mvvmsample.databinding;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.TextView;
+import com.example.library.base.BaseActivity;
+import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
+import com.pax.mvvmsample.ui.gank.GankFragment;
 
-import java.util.ArrayList;
+public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel> {
 
-
-public class HomeActivity extends AppCompatActivity {
-
+    private FrameLayout flContent;
+    private BottomNavigationView navigation;
     private String currentFragmentTag ;
     public static final String FRAGMENT_TAG_ZHIHUDAILY = "ZhiHuDaily";
     public static final String FRAGMENT_TAG_PICTURE = "Picture";
@@ -47,19 +45,26 @@ public class HomeActivity extends AppCompatActivity {
             return false;
         }
     };
-    private FrameLayout flContent;
 
-    @SuppressLint("RestrictedApi")
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        flContent = findViewById(R.id.content);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+    protected int initBR() {
+        return BR.vm;
+    }
+
+    @Override
+    public int getLayoutID() {
+        return R.layout.activity_home;
+    }
+
+    @Override
+    protected void initViewAndData() {
+        flContent = mBinding.content;;
+        navigation = mBinding.navigation;
+        setActionBar();
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         switchContent(FRAGMENT_TAG_ZHIHUDAILY);
-
     }
 
     private void switchContent(String tag) {
@@ -100,6 +105,11 @@ public class HomeActivity extends AppCompatActivity {
         }
         ft.commit();
         currentFragmentTag = tag;
+    }
+
+
+    public void setActionBar(){
+         getSupportActionBar().setTitle("GANK");
     }
 
 
