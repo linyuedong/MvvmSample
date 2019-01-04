@@ -60,9 +60,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel
 
     @Override
     protected void initViewAndData() {
-        flContent = mBinding.content;;
         navigation = mBinding.navigation;
-        setActionBar();
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         switchContent(FRAGMENT_TAG_ZHIHUDAILY);
     }
@@ -108,8 +106,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel
     }
 
 
-    public void setActionBar(){
-         getSupportActionBar().setTitle("GANK");
+    public void setActionBarTitle(String title){
+         getSupportActionBar().setTitle(title);
     }
 
 

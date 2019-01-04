@@ -9,6 +9,7 @@ import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.adapter.SimpleFragmentPagerAdapter;
 import com.pax.mvvmsample.databinding.FragmentGankBinding;
+import com.pax.mvvmsample.databinding.HomeActivity;
 import com.pax.mvvmsample.ui.gank.android.AndroidFragment;
 import com.pax.mvvmsample.ui.gank.beauty.BeautyFragment;
 import com.pax.mvvmsample.ui.gank.daily.DailyFragment;
@@ -91,9 +92,7 @@ public class GankFragment extends BaseFragment<FragmentGankBinding, GankViewMode
     }
 
     private void initActionBar() {
-//        ActionBar actionBar = getActivity().getActionBar();
-//
-//        actionBar.setTitle("GANK");
+        ((HomeActivity)getActivity()).setActionBarTitle("Gank");
     }
 
 
