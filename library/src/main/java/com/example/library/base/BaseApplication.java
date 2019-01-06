@@ -4,13 +4,10 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.library.Utils.LogUtlis;
 import com.github.naturs.logger.Logger;
-import com.github.naturs.logger.adapter.DefaultLogAdapter;
 import com.github.naturs.logger.android.adapter.AndroidLogAdapter;
 import com.github.naturs.logger.android.strategy.converter.AndroidLogConverter;
 
@@ -41,10 +38,10 @@ public class BaseApplication extends Application {
 //            }
 //        });
 
-        Logger.addLogAdapter(new AndroidLogAdapter(Constants.globleTag,false));
+        Logger.addLogAdapter(new AndroidLogAdapter(BaseConstants.globleTag,false));
         Logger.setLogConverter(new AndroidLogConverter());
 
-        LogUtlis.setGlobleTag(Constants.globleTag);
+        LogUtlis.setGlobleTag(BaseConstants.globleTag);
 
     }
 

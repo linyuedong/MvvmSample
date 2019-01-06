@@ -28,8 +28,8 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         mBinding = DataBindingUtil.setContentView(this, getLayoutID());
         Class<VM> clazz = (Class <VM>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         mViewModel = (VM) ViewModelProviders.of(this).get(clazz);
-        getLifecycle().addObserver(mViewModel);
         mBinding.setVariable(initBR(), mViewModel);
+        getLifecycle().addObserver(mViewModel);
     }
 
     protected abstract int initBR();

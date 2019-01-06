@@ -1,15 +1,18 @@
 package com.pax.mvvmsample.databinding;
 
-import android.support.annotation.NonNull;
+import android.databinding.Observable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.MenuItem;
 import android.widget.FrameLayout;
+
+import com.example.library.Utils.LogUtlis;
 import com.example.library.base.BaseActivity;
+
 import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
+import com.pax.mvvmsample.app.Constants;
 import com.pax.mvvmsample.ui.gank.GankFragment;
 
 public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel> {
@@ -17,34 +20,6 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel
     private FrameLayout flContent;
     private BottomNavigationView navigation;
     private String currentFragmentTag ;
-    public static final String FRAGMENT_TAG_ZHIHUDAILY = "ZhiHuDaily";
-    public static final String FRAGMENT_TAG_PICTURE = "Picture";
-    public static final String FRAGMENT_TAG_VIDEO = "Video";
-    public static final String FRAGMENT_TAG_SETTING = "Setting";
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    switchContent(FRAGMENT_TAG_ZHIHUDAILY);
-                    return true;
-                case R.id.navigation_home2:
-
-                    switchContent(FRAGMENT_TAG_PICTURE);
-                    return true;
-                case R.id.navigation_dashboard:
-                    switchContent(FRAGMENT_TAG_VIDEO);
-                    return true;
-                case R.id.navigation_notifications:
-                    switchContent(FRAGMENT_TAG_SETTING);
-                    return true;
-            }
-            return false;
-        }
-    };
 
 
 
@@ -60,10 +35,20 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel
 
     @Override
     protected void initViewAndData() {
-        navigation = mBinding.navigation;
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        switchContent(FRAGMENT_TAG_ZHIHUDAILY);
+        switchContent(Constants.FRAGMENT_TAG_ZHIHUDAILY);
+
+   mViewModel.uc.itemSelected.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+       @Override
+       public void onPropertyChanged(Observable sender, int propertyId) {
+           String fragmentName = mViewModel.uc.itemSelected.get();
+           LogUtlis.i("fragmentName = " + fragmentName);
+           switchContent(fragmentName);
+       }
+   });
+
     }
+
+
 
     private void switchContent(String tag) {
         //点击相同Item不做处理
@@ -80,16 +65,16 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel
         Fragment tagetFragment = mFragmentManager.findFragmentByTag(tag);
         if (tagetFragment == null) {
             switch (tag) {
-                case FRAGMENT_TAG_ZHIHUDAILY:
+                case Constants.FRAGMENT_TAG_ZHIHUDAILY:
                     tagetFragment = GankFragment.newInstance();
                     break;
-                case FRAGMENT_TAG_PICTURE:
+                case Constants.FRAGMENT_TAG_PICTURE:
                     tagetFragment = Test1Fragment.newInstance();
                     break;
-                case FRAGMENT_TAG_VIDEO:
+                case Constants.FRAGMENT_TAG_VIDEO:
                     tagetFragment = GankFragment.newInstance();
                     break;
-                case FRAGMENT_TAG_SETTING:
+                case Constants.FRAGMENT_TAG_SETTING:
                     tagetFragment = Test1Fragment.newInstance();
                     break;
             }

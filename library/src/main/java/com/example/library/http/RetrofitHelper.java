@@ -3,7 +3,7 @@ package com.example.library.http;
 
 
 import com.example.library.base.BaseApplication;
-import com.example.library.base.Constants;
+import com.example.library.base.BaseConstants;
 import com.example.library.http.interceptor.logging.Level;
 import com.example.library.http.interceptor.logging.LoggingInterceptor;
 import com.example.library.http.interceptor.net.NetInterceptor;
@@ -66,8 +66,8 @@ public class RetrofitHelper {
                 .loggable(BaseApplication.isDebug()) //是否开启日志打印
                 .setLevel(Level.BASIC) //打印的等级
                 .log(Platform.INFO) // 打印类型
-                .request(Constants.globleTag + "-Request") // request的Tag
-                .response(Constants.globleTag + "-Response")// Response的Tag
+                .request(BaseConstants.globleTag + "-Request") // request的Tag
+                .response(BaseConstants.globleTag + "-Response")// Response的Tag
                 .addHeader("log-header", "I am the log request header.") // 添加打印头, 注意 key 和 value 都不能是中文
                 .build());
 
