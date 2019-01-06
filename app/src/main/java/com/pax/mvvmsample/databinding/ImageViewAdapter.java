@@ -9,7 +9,6 @@ public class ImageViewAdapter {
 
     @BindingAdapter(value = {"imageUrl"})
     public static void setImageUrl(ImageView view,String imageUrl){
-        Glide.with(view.getContext()).load(imageUrl).into(view);
-
+        Glide.with(view.getContext()).asBitmap().load(imageUrl).into(view);
     }
 }

@@ -28,7 +28,7 @@ public class IosFragment extends BaseFragment<FragmentIosBinding,IosViewModel> {
     }
 
     @Override
-    protected void initData() {
+    protected void initViewAndEvent() {
         mViewModel.test.set("IOS");
     }
 }

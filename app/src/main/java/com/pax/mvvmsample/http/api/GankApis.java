@@ -9,6 +9,7 @@ import com.pax.mvvmsample.http.response.GankHttpResponse;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -24,7 +25,7 @@ public interface GankApis {
      * 技术文章列表
      */
     @GET("data/{tech}/{num}/{page}")
-    Flowable<GankHttpResponse<List<GankItemBean>>> getTechList(@Path("tech") String tech, @Path("num") int num, @Path("page") int page);
+    Observable<GankHttpResponse<List<GankItemBean>>> getTechList(@Path("tech") String tech, @Path("num") int num, @Path("page") int page);
 
     /**
      * 妹纸列表

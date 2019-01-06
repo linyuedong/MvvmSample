@@ -72,38 +72,38 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
         Test.test();
-        ApiHelper.getZhihuApis().getThemeList()
-                .compose(RxUtils.<ThemeListBean>rxSchedulersHelper())
-                .compose(RxUtils.<ThemeListBean>rxErrorHelper())
-                .as(RxUtils.<ThemeListBean>bindLifecycle(this))
-                .subscribe(new io.reactivex.Observer<ThemeListBean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ThemeListBean themeListBean) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LogUtlis.i(e.getMessage());
-
-
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-        Log.d("aa","cc");
-
-        LogUtlis.d("cc");
+//        ApiHelper.getZhihuApis().getThemeList()
+//                .compose(RxUtils.<ThemeListBean>rxSchedulersHelper())
+//                .compose(RxUtils.<ThemeListBean>rxErrorHelper())
+//                .as(RxUtils.<ThemeListBean>bindLifecycle(this))
+//                .subscribe(new io.reactivex.Observer<ThemeListBean>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(ThemeListBean themeListBean) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        LogUtlis.i(e.getMessage());
+//
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+//
+//        Log.d("aa","cc");
+//
+//        LogUtlis.d("cc");
 
 
     }

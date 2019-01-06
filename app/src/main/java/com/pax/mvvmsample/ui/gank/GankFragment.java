@@ -43,31 +43,8 @@ public class GankFragment extends BaseFragment<FragmentGankBinding, GankViewMode
     }
 
     @Override
-    protected void initData() {
-
+    protected void initViewAndEvent() {
         initTabLayout();
-
-//        recyclerView = mBinding.recyclerView;
-//        refreshLayout = mBinding.refreshLayout;
-//        mViewModel.url.set("http://cn.bing.com/az/hprichbg/rb/TOAD_ZH-CN7336795473_1920x1080.jpg");
-//        for (int i = 0; i < 10; i++) {
-//            mViewModel.items.add("" + i);
-//        }
-//
-//        refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
-//        refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
-//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh(RefreshLayout refreshlayout) {
-//                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-//            }
-//        });
-//        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore(RefreshLayout refreshlayout) {
-//                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
-//            }
-//        });
     }
 
     private void initTabLayout() {

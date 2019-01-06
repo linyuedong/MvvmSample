@@ -36,8 +36,9 @@ public abstract class BaseFragment<V extends ViewDataBinding , VM extends BaseVi
         mBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         Class<VM> clazz = (Class <VM>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         mViewModel = (VM) ViewModelProviders.of(getActivity()).get(clazz);
-        getLifecycle().addObserver(mViewModel);
         mBinding.setVariable(initBR(), mViewModel);
+        getLifecycle().addObserver(mViewModel);
+        mViewModel.addLifeCycle(this);
     }
 
     protected abstract int initBR();
@@ -49,10 +50,10 @@ public abstract class BaseFragment<V extends ViewDataBinding , VM extends BaseVi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initData();
+        initViewAndEvent();
     }
 
-    protected abstract void initData();
+    protected abstract void initViewAndEvent();
 
     @Override
     public void onDestroyView() {

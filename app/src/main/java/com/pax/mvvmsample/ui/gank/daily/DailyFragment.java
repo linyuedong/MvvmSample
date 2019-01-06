@@ -29,7 +29,7 @@ public class DailyFragment extends BaseFragment<FragmentDailyBinding,DailyViewMo
     }
 
     @Override
-    protected void initData() {
+    protected void initViewAndEvent() {
         mViewModel.test.set("DAILY");
     }
 }

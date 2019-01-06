@@ -30,6 +30,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         mViewModel = (VM) ViewModelProviders.of(this).get(clazz);
         mBinding.setVariable(initBR(), mViewModel);
         getLifecycle().addObserver(mViewModel);
+        mViewModel.addLifeCycle(this);
     }
 
     protected abstract int initBR();

@@ -26,7 +26,7 @@ public class BeautyFragment extends BaseFragment<FragmentBeautyBinding,BeautyVie
     }
 
     @Override
-    protected void initData() {
+    protected void initViewAndEvent() {
 mViewModel.test.set("BEAUTY");
     }
 

@@ -36,12 +36,14 @@ public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, Androi
     }
 
     @Override
-    protected void initData() {
+    protected void initViewAndEvent() {
+        initView();
+        mViewModel.loadAndroidData();
+    }
+
+    private void initView() {
         RecyclerView recyclerView = mBinding.recyclerView;
         SmartRefreshLayout refreshLayout = mBinding.refreshLayout;
-        for (int i = 0; i < 10; i++) {
-            mViewModel.items.add("" + i);
-        }
         refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {

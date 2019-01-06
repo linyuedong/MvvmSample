@@ -4,15 +4,18 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.library.Utils.LogUtlis;
+import com.trello.rxlifecycle2.LifecycleProvider;
 
 public class LifecycleViewModel extends AndroidViewModel implements LifecycleObserver {
 
     public final String TAG = getClass().getSimpleName();
+    private LifecycleOwner lifecycleOwner = null;
 
     public LifecycleViewModel(@NonNull Application application) {
         super(application);
@@ -57,4 +60,14 @@ public class LifecycleViewModel extends AndroidViewModel implements LifecycleObs
         LogUtlis.i(TAG + ":onDestory");
 
     }
+
+
+    public void addLifeCycle(LifecycleOwner lifecycleOwner){
+        this.lifecycleOwner = lifecycleOwner;
+    }
+
+    public LifecycleOwner getLifeCycle(){
+        return lifecycleOwner;
+    }
+
 }
