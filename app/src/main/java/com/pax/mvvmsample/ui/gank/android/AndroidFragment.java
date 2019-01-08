@@ -1,18 +1,15 @@
 package com.pax.mvvmsample.ui.gank.android;
-
-
-import android.support.v7.widget.RecyclerView;
-
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import com.example.library.base.BaseFragment;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.databinding.FragmentAndroidBinding;
 import com.pax.mvvmsample.BR;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
 
 public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, AndroidViewModel> {
 
@@ -42,21 +39,31 @@ public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, Androi
     }
 
     private void initView() {
-        RecyclerView recyclerView = mBinding.recyclerView;
-        SmartRefreshLayout refreshLayout = mBinding.refreshLayout;
+        final SmartRefreshLayout refreshLayout = mBinding.refreshLayout;
         refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        mViewModel.status.observe(this, new Observer<Throwable>() {
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            public void onChanged(@Nullable Throwable throwable) {
+                if (throwable != null) {
+                    Snackbar.make(mRootView, throwable.getMessage(), Snackbar.LENGTH_LONG).show();
+                }
             }
         });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+
+        mViewModel.loadMoreState.observe(this, new Observer<Boolean>() {
             @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            public void onChanged(@Nullable Boolean successs) {
+                refreshLayout.finishLoadMore(successs);
             }
         });
+
+        mViewModel.refreshState.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean success) {
+                refreshLayout.finishRefresh(success);
+            }
+        });
+
     }
 }

@@ -8,6 +8,8 @@ import com.example.library.base.BaseViewModel;
 
 public class DailyViewModel extends BaseViewModel {
     public final ObservableField<String> test = new ObservableField<>();
+    public final ObservableField<String> url = new ObservableField<>();
+
     public DailyViewModel(@NonNull Application application) {
         super(application);
     }

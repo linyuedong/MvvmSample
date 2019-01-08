@@ -20,6 +20,8 @@
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
+            app:bind_loadMoreCommand="@{vm.loadMoreCommand}"
+            app:bind_onRerfeshCommand="@{vm.refreshCommand}"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

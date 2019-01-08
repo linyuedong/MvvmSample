@@ -13,7 +13,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.example.library.Utils.LogUtlis;
 import com.pax.mvvmsample.Utils.RxUtils;
 import com.pax.mvvmsample.databinding.LoginActivity;
@@ -22,8 +25,15 @@ import com.pax.mvvmsample.http.bean.ThemeListBean;
 import com.pax.mvvmsample.jetpack.MyLiveData;
 import com.pax.mvvmsample.jetpack.MyModel;
 import com.pax.mvvmsample.jetpack.MyObserver;
-import io.reactivex.disposables.Disposable;
 
+import java.io.IOException;
+
+import io.reactivex.disposables.Disposable;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class MainActivity extends AppCompatActivity  {
@@ -72,40 +82,38 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
         Test.test();
-//        ApiHelper.getZhihuApis().getThemeList()
-//                .compose(RxUtils.<ThemeListBean>rxSchedulersHelper())
-//                .compose(RxUtils.<ThemeListBean>rxErrorHelper())
-//                .as(RxUtils.<ThemeListBean>bindLifecycle(this))
-//                .subscribe(new io.reactivex.Observer<ThemeListBean>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(ThemeListBean themeListBean) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        LogUtlis.i(e.getMessage());
-//
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//
-//        Log.d("aa","cc");
-//
-//        LogUtlis.d("cc");
 
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = "http://wwww.baidu.com";
+                OkHttpClient okHttpClient = new OkHttpClient();
+                final Request request = new Request.Builder()
+                        .url(url)
+                        .get()//默认就是GET请求，可以不写
+                        .build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        LogUtlis.i( "onFailure: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        LogUtlis.i("onResponse: " + response.body().string());
+                    }
+                });
+
+
+            }
+        }).start();
+
+        ImageView iv = findViewById(R.id.iv);
+        String url = "http://img1.dzwww.com:8080/tupian_pl/20150813/16/7858995348613407436.jpg";
+        //Glide.with(this).load(url).into(iv);
     }
 
 

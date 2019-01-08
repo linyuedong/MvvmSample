@@ -1,5 +1,7 @@
 package com.pax.mvvmsample.http.bean;
 
+import java.util.List;
+
 /**
  * Created by codeest on 16/8/20.
  */
@@ -29,6 +31,35 @@ public class GankItemBean {
     private boolean used;
     private String who;
     private int height;
+    private List<String> images;
+    private String image;
+    private boolean gone ;
+
+    public boolean isGone() {
+        return gone;
+    }
+
+    public void setGone(boolean gone) {
+        this.gone = gone;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+
 
     public int getHeight() {
         return height;

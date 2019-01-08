@@ -20,6 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 public class RxUtils {
     private static final int STATUS_UNAUTHORIZED = 401;
 
+
     public static <T> ObservableTransformer<T,T> rxSchedulersHelper(){
         return new ObservableTransformer<T, T>() {
             @Override
@@ -38,13 +39,12 @@ public class RxUtils {
                 return upstream.onErrorResumeNext(new Function<Throwable, ObservableSource<? extends T>>() {
                     @Override
                     public ObservableSource<? extends T> apply(Throwable throwable) throws Exception {
-                        LogUtlis.i("onErrorResumeNext");
                         return Observable.error(ExceptionHandle.handleException(throwable));
                     }
                 }).doOnError(new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Toast.makeText(MyApplication.getContext(),throwable.getMessage(),Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MyApplication.getContext(),throwable.getMessage(),Toast.LENGTH_SHORT).show();
                     }
                 });
             }

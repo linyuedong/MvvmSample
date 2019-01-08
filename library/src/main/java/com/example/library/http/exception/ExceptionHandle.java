@@ -25,7 +25,7 @@ public class ExceptionHandle {
         ResponeThrowable ex;
         if (e instanceof HttpException) {
             HttpException httpException = (HttpException) e;
-            ex = new ResponeThrowable(e, ERROR.HTTP_ERROR);
+            ex = new ResponeThrowable(e, Error.Code.HTTP_ERROR);
             switch (httpException.code()) {
                 case UNAUTHORIZED:
                 case FORBIDDEN:
@@ -36,7 +36,7 @@ public class ExceptionHandle {
                 case BAD_GATEWAY:
                 case SERVICE_UNAVAILABLE:
                 default:
-                    ex.message = "网络错误";
+                    ex.message = Error.Message.NETWORD_ERROR;
                     break;
             }
             return ex;
@@ -48,51 +48,23 @@ public class ExceptionHandle {
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
                 || e instanceof ParseException) {
-            ex = new ResponeThrowable(e, ERROR.PARSE_ERROR);
-            ex.message = "解析错误";
+            ex = new ResponeThrowable(e, Error.Code.PARSE_ERROR);
+            ex.message = Error.Message.PARSE_ERROR;
             return ex;
         } else if (e instanceof ConnectException) {
             LogUtlis.i("ConnectException");
-            ex = new ResponeThrowable(e, ERROR.NETWORD_ERROR);
-            ex.message = "连接失败";
+            ex = new ResponeThrowable(e, Error.Code.NETWORD_ERROR);
+            ex.message = Error.Message.NETWORD_ERROR;
             return ex;
         } else if (e instanceof javax.net.ssl.SSLHandshakeException) {
-            ex = new ResponeThrowable(e, ERROR.SSL_ERROR);
-            ex.message = "证书验证失败";
+            ex = new ResponeThrowable(e, Error.Code.SSL_ERROR);
+            ex.message = Error.Message.SSL_ERROR;
             return ex;
         } else {
-            ex = new ResponeThrowable(e, ERROR.UNKNOWN);
-            ex.message = "未知错误";
+            ex = new ResponeThrowable(e, Error.Code.UNKNOWN);
+            ex.message = Error.Message.UNKNOWN;
             return ex;
         }
-    }
-
-
-    /**
-     * 约定异常
-     */
-    class ERROR {
-        /**
-         * 未知错误
-         */
-        public static final int UNKNOWN = 1000;
-        /**
-         * 解析错误
-         */
-        public static final int PARSE_ERROR = 1001;
-        /**
-         * 网络错误
-         */
-        public static final int NETWORD_ERROR = 1002;
-        /**
-         * 协议出错
-         */
-        public static final int HTTP_ERROR = 1003;
-
-        /**
-         * 证书出错
-         */
-        public static final int SSL_ERROR = 1005;
     }
 
 

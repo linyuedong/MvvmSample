@@ -16,23 +16,21 @@ public class NoNetInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
 
         if(!NetworkUtils.isNetworkConnected()){
-            Request request = chain.request().newBuilder()
-                    .cacheControl(CacheControl.FORCE_CACHE)
-                    .build();
+            Request request = chain.request();
+//            Request request = chain.request().newBuilder()
+//                    .cacheControl(CacheControl.FORCE_CACHE)
+//                    .build();
             Response response = chain.proceed(request).newBuilder()
-                    .header("Cache-Control", "public, only-if-cached, max-stale=3600")
                     .removeHeader("Pragma")
+                    .header("Cache-Control", "public, only-if-cached, max-stale=3600")
                     .build();
-            LogUtlis.d("CInterceptor: response cache :"+ response.cacheResponse());
+            LogUtlis.d("NoNetInterceptor: response cache :"+ response.cacheResponse());
             LogUtlis.d("NoNetInterceptor: response net :"+ response.networkResponse());
             return response;
         }
 
-        Request request = chain.request();
-        Response response = chain.proceed(request);
-        LogUtlis.d("CInterceptor: response cache :"+ response.cacheResponse());
-        LogUtlis.d("NoNetInterceptor: response net :"+ response.networkResponse());
-        return response;
+
+        return chain.proceed(chain.request());
     }
 }
 

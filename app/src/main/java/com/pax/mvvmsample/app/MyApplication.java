@@ -28,7 +28,7 @@ public class MyApplication extends BaseApplication {
     }
 
     private void init() {
-        initCanary();
+        //initCanary();
         initBugly();
     }
 

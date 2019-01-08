@@ -20,6 +20,9 @@ public abstract class BaseFragment<V extends ViewDataBinding , VM extends BaseVi
     protected View mRootView;
     protected VM mViewModel;
 
+    public boolean hasLoadData = false;
+    public boolean isViewPrepared = false;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +53,8 @@ public abstract class BaseFragment<V extends ViewDataBinding , VM extends BaseVi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViewAndEvent();
+        isViewPrepared = true;
+        lazyLoad();
     }
 
     protected abstract void initViewAndEvent();
@@ -58,6 +62,8 @@ public abstract class BaseFragment<V extends ViewDataBinding , VM extends BaseVi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        hasLoadData = false;
+        isViewPrepared = false;
     }
 
     @Override
@@ -66,5 +72,21 @@ public abstract class BaseFragment<V extends ViewDataBinding , VM extends BaseVi
         mBinding.unbind();
         getLifecycle().removeObserver(mViewModel);
         mViewModel = null;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            lazyLoad();
+        }
+
+    }
+
+    private void lazyLoad() {
+        if(getUserVisibleHint() && isViewPrepared && !hasLoadData){
+            hasLoadData = true;
+            initViewAndEvent();
+        }
     }
 }
