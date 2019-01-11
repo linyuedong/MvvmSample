@@ -64,6 +64,8 @@ dependencies {
     //rxbinding-recycleview
     api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0'
     api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0'
+    //rxbind
+    api 'com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha2'
 
     //gson
     api 'com.google.code.gson:gson:2.8.5'
@@ -72,8 +74,11 @@ dependencies {
     //api 'com.orhanobut:logger:2.2.0'
     api 'com.github.naturs.logger:logger-android:0.3'
 
+    //smartrefresh
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-18'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-18'//没有使用特殊Header，可以不加这行
 
+    //lottie
+    api 'com.airbnb.android:lottie:2.7.0'
 
 }

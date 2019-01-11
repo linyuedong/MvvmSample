@@ -5,7 +5,9 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+
 import com.example.library.base.BaseViewModel;
+import com.example.library.base.adpter.BaseRecycleViewAdapter;
 import com.example.library.binding.command.BindAction1;
 import com.example.library.bus.event.SingleLiveEvent;
 import com.pax.mvvmsample.BR;
@@ -28,7 +30,7 @@ public class AndroidViewModel extends BaseViewModel {
     public  int page = 1;
 
     public final ObservableList<AndroidItemViewModel> items = new ObservableArrayList<>();
-    public final ItemBinding<AndroidItemViewModel> itemBinding = ItemBinding.of(BR.item, R.layout.fragment_gank_item);
+    public final ItemBinding<AndroidItemViewModel> itemBinding = ItemBinding.of(BR.item, R.layout.fragment_android_item);
 
     public AndroidViewModel(@NonNull Application application) {
         super(application);
@@ -38,7 +40,7 @@ public class AndroidViewModel extends BaseViewModel {
     public SingleLiveEvent<Boolean> refreshState = new SingleLiveEvent<>();
     public SingleLiveEvent<Boolean> loadMoreState = new SingleLiveEvent<>();
 
-
+    public BaseRecycleViewAdapter<AndroidItemViewModel> adapter = new BaseRecycleViewAdapter<AndroidItemViewModel>();
 
     public final BindAction1 refreshCommand = new BindAction1<RefreshLayout>() {
         @Override
@@ -60,6 +62,7 @@ public class AndroidViewModel extends BaseViewModel {
                     .subscribe(new Consumer<GankHttpResponse<List<GankItemBean>>>() {
                         @Override
                         public void accept(GankHttpResponse<List<GankItemBean>> listGankHttpResponse) throws Exception {
+                            showContentView();
                             List<GankItemBean> results = listGankHttpResponse.getResults();
                             if(transformData(results)){
                                 loadMoreState.setValue(true);
@@ -71,7 +74,10 @@ public class AndroidViewModel extends BaseViewModel {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            page--;
+                            showErrorView();
+                            if(page > 1){
+                                page--;
+                            }
                             loadMoreState.setValue(false);
                             status.setValue(throwable);
 
@@ -89,6 +95,7 @@ public class AndroidViewModel extends BaseViewModel {
                 .subscribe(new Consumer<GankHttpResponse<List<GankItemBean>>>() {
                     @Override
                     public void accept(GankHttpResponse<List<GankItemBean>> listGankHttpResponse) throws Exception {
+                        showContentView();
                         List<GankItemBean> results = listGankHttpResponse.getResults();
                         if(transformData(results)){
                             refreshState.setValue(true);
@@ -101,7 +108,10 @@ public class AndroidViewModel extends BaseViewModel {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        page--;
+                       showErrorView();
+                        if(page > 1){
+                            page--;
+                        }
                         refreshState.setValue(false);
                         status.setValue(throwable);
                     }

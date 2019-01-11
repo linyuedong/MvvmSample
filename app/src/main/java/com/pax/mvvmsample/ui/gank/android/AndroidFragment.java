@@ -1,11 +1,15 @@
 package com.pax.mvvmsample.ui.gank.android;
 import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.view.View;
 import com.example.library.base.BaseFragment;
+import com.example.library.base.adpter.BaseRecycleViewAdapter;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.databinding.FragmentAndroidBinding;
 import com.pax.mvvmsample.BR;
+import com.pax.mvvmsample.databinding.WebActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -13,6 +17,8 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, AndroidViewModel> {
 
+
+    private SmartRefreshLayout refreshLayout;
 
     public AndroidFragment() {
     }
@@ -35,13 +41,11 @@ public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, Androi
     @Override
     protected void initViewAndEvent() {
         initView();
+        initEvent();
         mViewModel.loadAndroidData();
     }
 
-    private void initView() {
-        final SmartRefreshLayout refreshLayout = mBinding.refreshLayout;
-        refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
-        refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
+    private void initEvent() {
         mViewModel.status.observe(this, new Observer<Throwable>() {
             @Override
             public void onChanged(@Nullable Throwable throwable) {
@@ -64,6 +68,33 @@ public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, Androi
                 refreshLayout.finishRefresh(success);
             }
         });
+    }
 
+
+
+
+    private void initView() {
+        refreshLayout = mBinding.refreshLayout;
+        refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
+        refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
+        mViewModel.adapter.setOnItemClickListener(new BaseRecycleViewAdapter.OnItemClickListener<AndroidItemViewModel>() {
+           @Override
+           public void onClick(View v, int position, AndroidItemViewModel item) {
+               Intent intent = new Intent();
+               intent.setClass(v.getContext(), WebActivity.class);
+               intent.putExtra("desc",item.bean.getDesc());
+               intent.putExtra("url",item.bean.getUrl());
+               startActivity(intent);
+           }
+
+
+       });
+
+    }
+
+    @Override
+    protected void onRefresh() {
+        super.onRefresh();
+        mViewModel.loadAndroidData();
     }
 }

@@ -48,6 +48,7 @@ public class GankFragment extends BaseFragment<FragmentGankBinding, GankViewMode
     }
 
     private void initTabLayout() {
+        showContentView();
         initActionBar();
         initTab();
     }

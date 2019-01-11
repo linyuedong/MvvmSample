@@ -1,6 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</LinearLayout>
+    <data>
+
+
+        <import type="com.pax.mvvmsample.ui.gank.android.AndroidItemViewModel"/>
+
+        <import type="android.view.View"/>
+
+        <variable name="item"
+                  type="com.pax.mvvmsample.ui.gank.android.AndroidItemViewModel"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackground"
+        bind_onClickCommand="@{item.itemClick}"
+        >
+        <LinearLayout
+            android:id="@+id/ll_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:orientation="vertical"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp">
+
+            <LinearLayout
+                android:id="@+id/ll_welfare_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_android_des"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:lineSpacingExtra="4dp"
+                    android:text="@{item.bean.desc}"
+                    android:textColor="@color/colorContent"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_android_pic"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="@{item.bean.gone ?  View.GONE : View.VISIBLE}"
+                    app:binding_imageUrl="@{item.bean.image}"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+
+                <TextView
+                    android:id="@+id/tv_android_who"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{item.bean.who}'
+                    android:textColor="@color/colorSubtitle"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_content_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_android_who"
+                    android:text=""
+                    android:textColor="@color/colorSubtitle"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_android_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text='@{item.bean.createdAt}'
+                    android:textColor="@color/colorSubtitle"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+</layout>
