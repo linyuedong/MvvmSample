@@ -1,9 +1,14 @@
 package com.pax.mvvmsample.ui.gank.android;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+
+import com.example.library.Utils.LogUtlis;
 import com.example.library.base.BaseFragment;
 import com.example.library.base.adpter.BaseRecycleViewAdapter;
 import com.example.library.view.webView.WebViewActivity;
@@ -11,6 +16,7 @@ import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.databinding.FragmentAndroidBinding;
 import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.databinding.WebActivity;
+import com.pax.mvvmsample.ui.wanandroid.WanAndroidFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -18,16 +24,29 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, AndroidViewModel> {
 
-
+    private static final String TYPE = "type";
     private SmartRefreshLayout refreshLayout;
 
+    public String mType;
     public AndroidFragment() {
     }
 
-    public static AndroidFragment newInstance() {
-        return new AndroidFragment();
+    public static AndroidFragment newInstance(String type) {
+        AndroidFragment fragment = new AndroidFragment();
+        Bundle args = new Bundle();
+        args.putString(TYPE, type);
+        fragment.setArguments(args);
+        return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mType = getArguments().getString(TYPE);
+        }
+        LogUtlis.i("mType = " + mType);
+    }
 
     @Override
     protected int initBR() {
@@ -39,6 +58,7 @@ public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, Androi
         return R.layout.fragment_android;
     }
 
+
     @Override
     protected void initViewAndEvent() {
         initView();
@@ -47,6 +67,7 @@ public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, Androi
     }
 
     private void initEvent() {
+        mViewModel.setType(mType);
         mViewModel.status.observe(this, new Observer<Throwable>() {
             @Override
             public void onChanged(@Nullable Throwable throwable) {
@@ -75,6 +96,7 @@ public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, Androi
 
 
     private void initView() {
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refreshLayout = mBinding.refreshLayout;
         refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));

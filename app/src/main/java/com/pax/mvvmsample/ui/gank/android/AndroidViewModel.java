@@ -26,7 +26,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class AndroidViewModel extends BaseViewModel {
 
-    public static final String TECH = "Android";
+    public  String TECH ;
     public static final int NUM = 10;
     public  int page = 1;
 
@@ -140,6 +140,10 @@ public class AndroidViewModel extends BaseViewModel {
             return true;
         }
         return false;
+    }
+
+    public void setType(String tpye){
+        TECH = tpye;
     }
 
 

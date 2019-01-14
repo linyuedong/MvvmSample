@@ -25,7 +25,18 @@ public class BaseViewModel extends LifecycleViewModel {
        mUIStatus.showErrorLiveData.setValue(true);
    }
 
-   
+   public void finishRefresh(boolean success){
+       mUIStatus.refreshState.setValue(success);
+
+   }
+
+   public void finishLoadMore(boolean success){
+       mUIStatus.loadMoreState.setValue(success);
+   }
+
+   public void showErrorSnackBar(Throwable throwable){
+       mUIStatus.status.setValue(throwable);
+   }
 
     class UIStatus{
         public SingleLiveEvent<Boolean> showContentLiveData = new SingleLiveEvent<>();

@@ -54,17 +54,17 @@ public class GankFragment extends BaseFragment<FragmentGankBinding, GankViewMode
     }
 
     private void initTab() {
-        List<String> titles = Arrays.asList("每日推荐", "安卓", "前端", "福利");
+        List<String> titles = Arrays.asList("安卓", "前端", "休息视频", "福利");
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(DailyFragment.newInstance());
-        fragmentList.add(AndroidFragment.newInstance());
-        fragmentList.add(IosFragment.newInstance());
+        fragmentList.add(AndroidFragment.newInstance("iOS"));
+        fragmentList.add(AndroidFragment.newInstance("iOS"));
+        fragmentList.add(BeautyFragment.newInstance());
         fragmentList.add(BeautyFragment.newInstance());
         SimpleFragmentPagerAdapter myAdapter = new SimpleFragmentPagerAdapter(getChildFragmentManager(), fragmentList, titles);
         mBinding.vpGank.setAdapter(myAdapter);
         // 左右预加载页面的个数
-        mBinding.vpGank.setOffscreenPageLimit(3);
-        myAdapter.notifyDataSetChanged();
+        mBinding.vpGank.setOffscreenPageLimit(0);
+        //myAdapter.notifyDataSetChanged();
         mBinding.tabGank.setTabMode(TabLayout.MODE_FIXED);
         mBinding.tabGank.setupWithViewPager(mBinding.vpGank);
     }

@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import android.widget.RelativeLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.library.R;
+import com.example.library.Utils.Utils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -33,6 +36,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     private View mLoadingView;
     private LottieAnimationView mLoadingAnimation;
     private View mRefresh;
+    private View mRefreshLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -213,8 +217,44 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
             }
         });
+
+
+        mViewModel.mUIStatus.refreshState.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                Utils.checkNotNull(mRefreshLayout);
+                if(mRefreshLayout instanceof SmartRefreshLayout){
+                    ((SmartRefreshLayout)mRefreshLayout).finishRefresh(aBoolean);
+                }
+            }
+        });
+
+        mViewModel.mUIStatus.loadMoreState.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                Utils.checkNotNull(mRefreshLayout);
+                if(mRefreshLayout instanceof SmartRefreshLayout){
+                    ((SmartRefreshLayout)mRefreshLayout).finishLoadMore(aBoolean);
+                }
+            }
+        });
+
+
+        mViewModel.mUIStatus.status.observe(this, new Observer<Throwable>() {
+            @Override
+            public void onChanged(@Nullable Throwable throwable) {
+                if (throwable != null) {
+                    Snackbar.make(mRootView, throwable.getMessage(), Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
     }
 
+    protected void setRefreshLsyout(View refreshLsyout){
+        mRefreshLayout = refreshLsyout;
+    }
 
     protected abstract int initBR();
 
