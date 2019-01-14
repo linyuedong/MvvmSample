@@ -6,13 +6,14 @@ import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.example.library.Utils.RxUtils;
 import com.example.library.base.BaseViewModel;
 import com.example.library.base.adpter.BaseRecycleViewAdapter;
+import com.example.library.binding.command.BindAction0;
 import com.example.library.binding.command.BindAction1;
 import com.example.library.bus.event.SingleLiveEvent;
 import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
-import com.pax.mvvmsample.Utils.RxUtils;
 import com.pax.mvvmsample.http.ApiHelper;
 import com.pax.mvvmsample.http.bean.GankItemBean;
 import com.pax.mvvmsample.http.response.GankHttpResponse;
@@ -42,18 +43,18 @@ public class AndroidViewModel extends BaseViewModel {
 
     public BaseRecycleViewAdapter<AndroidItemViewModel> adapter = new BaseRecycleViewAdapter<AndroidItemViewModel>();
 
-    public final BindAction1 refreshCommand = new BindAction1<RefreshLayout>() {
+    public final BindAction0 refreshCommand = new BindAction0() {
         @Override
-        public void call(final RefreshLayout refreshLayout) {
+        public void call() {
             page = 1;
             loadAndroidData();
         }
     };
 
 
-    public final BindAction1 loadMoreCommand = new BindAction1<RefreshLayout>() {
+    public final BindAction0 loadMoreCommand = new BindAction0() {
         @Override
-        public void call(final RefreshLayout refreshLayout) {
+        public void call() {
             page++;
             ApiHelper.getGankApis().getTechList(TECH,NUM,page)
                     .compose(RxUtils.<GankHttpResponse<List<GankItemBean>>>rxErrorHelper())

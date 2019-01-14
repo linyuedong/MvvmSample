@@ -31,7 +31,7 @@ public interface GankApis {
      * 妹纸列表
      */
     @GET("data/福利/{num}/{page}")
-    Flowable<GankHttpResponse<List<GankItemBean>>> getGirlList(@Path("num") int num, @Path("page") int page);
+    Observable<GankHttpResponse<List<GankItemBean>>> getGirlList(@Path("num") int num, @Path("page") int page);
 
     /**
      * 随机妹纸图

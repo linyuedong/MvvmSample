@@ -1,13 +1,14 @@
-package com.pax.mvvmsample.Utils;
+package com.example.library.Utils;
+
+import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
-import android.widget.Toast;
-import com.example.library.Utils.LogUtlis;
+
 import com.example.library.http.exception.ExceptionHandle;
-import com.pax.mvvmsample.app.MyApplication;
+import com.trello.rxlifecycle2.LifecycleProvider;
+import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.AutoDisposeConverter;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -56,6 +57,11 @@ public class RxUtils {
         return AutoDispose.autoDisposable(
                 AndroidLifecycleScopeProvider.from(lifecycleOwner)
         );
+    }
+
+
+    public static LifecycleTransformer<Object> bindLifecycle(LifecycleProvider<Lifecycle.Event> provider){
+        return provider.bindToLifecycle();
     }
 
 

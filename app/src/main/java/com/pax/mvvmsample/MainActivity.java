@@ -10,30 +10,27 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.library.Utils.LogUtlis;
-import com.pax.mvvmsample.Utils.RxUtils;
+import com.pax.mvvmsample.databinding.HomeActivity;
 import com.pax.mvvmsample.databinding.LoginActivity;
-import com.pax.mvvmsample.http.ApiHelper;
-import com.pax.mvvmsample.http.bean.ThemeListBean;
 import com.pax.mvvmsample.jetpack.MyLiveData;
 import com.pax.mvvmsample.jetpack.MyModel;
 import com.pax.mvvmsample.jetpack.MyObserver;
 
 import java.io.IOException;
 
-import io.reactivex.disposables.Disposable;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
 
 
 public class MainActivity extends AppCompatActivity  {
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity  {
         bt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, HomeActivity.class));
             }
         });
         Test.test();
@@ -114,11 +111,17 @@ public class MainActivity extends AppCompatActivity  {
         ImageView iv = findViewById(R.id.iv);
         String url = "http://img1.dzwww.com:8080/tupian_pl/20150813/16/7858995348613407436.jpg";
         //Glide.with(this).load(url).into(iv);
+
+        test();
+
+    }
+
+
+
+    public void test(){
+        Toast.makeText(this,"hh",Toast.LENGTH_SHORT).show();
+
     }
 
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
 }

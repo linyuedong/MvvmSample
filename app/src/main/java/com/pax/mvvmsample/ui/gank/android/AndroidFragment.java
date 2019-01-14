@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import com.example.library.base.BaseFragment;
 import com.example.library.base.adpter.BaseRecycleViewAdapter;
+import com.example.library.view.webView.WebViewActivity;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.databinding.FragmentAndroidBinding;
 import com.pax.mvvmsample.BR;
@@ -84,7 +85,7 @@ public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, Androi
                intent.setClass(v.getContext(), WebActivity.class);
                intent.putExtra("desc",item.bean.getDesc());
                intent.putExtra("url",item.bean.getUrl());
-               startActivity(intent);
+               WebViewActivity.loadUrl(getActivity(),item.bean.getUrl(),item.bean.getDesc());
            }
 
 

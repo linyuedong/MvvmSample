@@ -25,10 +25,17 @@ public class BaseViewModel extends LifecycleViewModel {
        mUIStatus.showErrorLiveData.setValue(true);
    }
 
+   
+
     class UIStatus{
         public SingleLiveEvent<Boolean> showContentLiveData = new SingleLiveEvent<>();
         public SingleLiveEvent<Boolean> showLoaddingtLiveData = new SingleLiveEvent<>();
         public SingleLiveEvent<Boolean> showErrorLiveData = new SingleLiveEvent<>();
+
+        public SingleLiveEvent<Throwable> status = new SingleLiveEvent<>();
+        public SingleLiveEvent<Boolean> refreshState = new SingleLiveEvent<>();
+        public SingleLiveEvent<Boolean> loadMoreState = new SingleLiveEvent<>();
+
     }
 
 

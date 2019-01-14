@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+        //startActivity(new Intent(LoginActivity.this,HomeActivity.class));
 
     }
 
