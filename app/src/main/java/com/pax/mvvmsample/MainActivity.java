@@ -17,11 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.library.Utils.LogUtlis;
-import com.pax.mvvmsample.databinding.HomeActivity;
-import com.pax.mvvmsample.databinding.LoginActivity;
 import com.pax.mvvmsample.jetpack.MyLiveData;
 import com.pax.mvvmsample.jetpack.MyModel;
 import com.pax.mvvmsample.jetpack.MyObserver;
+import com.pax.mvvmsample.ui.home.HomeActivity;
 
 import java.io.IOException;
 

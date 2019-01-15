@@ -6,6 +6,7 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 
+import com.example.library.Utils.LogUtlis;
 import com.example.library.Utils.RxUtils;
 import com.example.library.base.BaseViewModel;
 import com.example.library.binding.command.BindAction0;
@@ -98,6 +99,7 @@ public class BeautyViewModel extends BaseViewModel {
                 .subscribe(new Consumer<GankHttpResponse<List<GankItemBean>>>() {
                     @Override
                     public void accept(GankHttpResponse<List<GankItemBean>> listGankHttpResponse) throws Exception {
+                        LogUtlis.i("SUCCESS");
                         showContentView();
                         List<GankItemBean> results = listGankHttpResponse.getResults();
                         if(results != null && results.size() > 0){
@@ -115,6 +117,7 @@ public class BeautyViewModel extends BaseViewModel {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        LogUtlis.i("FAILD");
                         showErrorView();
                         if(page > 1){
                             page--;

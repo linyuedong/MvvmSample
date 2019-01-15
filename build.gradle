@@ -2,12 +2,14 @@
 apply from: "config.gradle"
 buildscript {
     repositories {
+        google()
         jcenter()
         mavenCentral()
         maven {
             url "https://maven.google.com"
         }
-        google()
+        maven { url "https://jitpack.io" }
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0'

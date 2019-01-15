@@ -25,8 +25,8 @@ public class NetInterceptor implements Interceptor {
                     .removeHeader("Pragma")
                     .header("Cache-Control", "public, max-age=" + maxTime)
                     .build();
-            LogUtlis.d("NetInterceptor: response cache :"+ response.cacheResponse());
-            LogUtlis.d("NetInterceptor: response net :"+ response.networkResponse());
+           // LogUtlis.d("NetInterceptor: response cache :"+ response.cacheResponse());
+            //LogUtlis.d("NetInterceptor: response net :"+ response.networkResponse());
             return  response;
         }
         return chain.proceed(chain.request());

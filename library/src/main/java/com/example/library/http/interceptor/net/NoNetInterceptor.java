@@ -24,8 +24,8 @@ public class NoNetInterceptor implements Interceptor {
                     .removeHeader("Pragma")
                     .header("Cache-Control", "public, only-if-cached, max-stale=3600")
                     .build();
-            LogUtlis.d("NoNetInterceptor: response cache :"+ response.cacheResponse());
-            LogUtlis.d("NoNetInterceptor: response net :"+ response.networkResponse());
+           // LogUtlis.d("NoNetInterceptor: response cache :"+ response.cacheResponse());
+           // LogUtlis.d("NoNetInterceptor: response net :"+ response.networkResponse());
             return response;
         }
 

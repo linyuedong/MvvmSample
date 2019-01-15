@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     //Bugly
     <uses-permission android:name="android.permission.READ_LOGS"/>
@@ -28,16 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".databinding.LoginActivity"
-            android:label="@string/title_activity_binding"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".databinding.HomeActivity"
-            android:label="@string/title_activity_home">
-        </activity>
         <activity android:name=".databinding.WebActivity">
+        </activity>
+        <activity android:name=".ui.home.HomeActivity">
         </activity>
     </application>
 

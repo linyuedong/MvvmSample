@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.pax.mvvmsample.databinding.HomeViewModel"/>
+            type="com.pax.mvvmsample.ui.home.HomeViewModel"/>
 
 
     </data>
@@ -31,7 +31,7 @@
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:background="?android:attr/windowBackground"
             app:itemBackground="@null"
             app:labelVisibilityMode="labeled"

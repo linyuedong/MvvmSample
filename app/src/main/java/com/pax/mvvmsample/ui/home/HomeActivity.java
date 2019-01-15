@@ -1,4 +1,4 @@
-package com.pax.mvvmsample.databinding;
+package com.pax.mvvmsample.ui.home;
 
 import android.databinding.Observable;
 import android.support.design.widget.BottomNavigationView;
@@ -9,11 +9,13 @@ import android.widget.FrameLayout;
 
 import com.example.library.Utils.LogUtlis;
 import com.example.library.base.BaseActivity;
-
 import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.app.Constants;
+import com.pax.mvvmsample.databinding.ActivityHomeBinding;
+import com.pax.mvvmsample.databinding.Test1Fragment;
 import com.pax.mvvmsample.ui.gank.GankFragment;
+import com.pax.mvvmsample.ui.wanandroid.WanAndroidFragment;
 
 public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel> {
 
@@ -69,7 +71,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel
                     tagetFragment = GankFragment.newInstance();
                     break;
                 case Constants.FRAGMENT_TAG_PICTURE:
-                    tagetFragment = Test1Fragment.newInstance();
+                    tagetFragment = WanAndroidFragment.newInstance("");
                     break;
                 case Constants.FRAGMENT_TAG_VIDEO:
                     tagetFragment = GankFragment.newInstance();

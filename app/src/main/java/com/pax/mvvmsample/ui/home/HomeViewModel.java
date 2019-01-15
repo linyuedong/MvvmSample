@@ -1,12 +1,8 @@
-package com.pax.mvvmsample.databinding;
+package com.pax.mvvmsample.ui.home;
 
 import android.app.Application;
-import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
 import com.example.library.base.BaseViewModel;
@@ -14,7 +10,6 @@ import com.example.library.binding.command.BindFunc1;
 import com.example.library.binding.command.ResponseCommand;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.app.Constants;
-import com.pax.mvvmsample.ui.gank.GankFragment;
 
 public class HomeViewModel extends BaseViewModel {
 

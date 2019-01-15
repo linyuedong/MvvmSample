@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.library.R;
+import com.example.library.Utils.LogUtlis;
 import com.example.library.Utils.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -119,7 +120,8 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     private void initDataBinding(LayoutInflater inflater, ViewGroup container) {
         mBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), getLayoutId(), container, false);
         Class<VM> clazz = (Class<VM>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-        mViewModel = (VM) ViewModelProviders.of(getActivity()).get(clazz);
+       // mViewModel = (VM) ViewModelProviders.of(getActivity()).get(clazz);
+        mViewModel = (VM) ViewModelProviders.of(this).get(clazz);
         mBinding.setVariable(initBR(), mViewModel);
         getLifecycle().addObserver(mViewModel);
         mViewModel.addLifeCycle(this);
@@ -200,6 +202,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         mViewModel.mUIStatus.showContentLiveData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
+                LogUtlis.i("receive : " + mViewModel.hashCode());
                 showContentView();
             }
         });
