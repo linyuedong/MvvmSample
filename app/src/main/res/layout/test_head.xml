@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="headVM"
+            type="com.pax.mvvmsample.ui.wanandroid.home.HeadtestVM"/>
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/test_tv"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="@{headVM.tv}"/>
+
+        <com.youth.banner.Banner
+            android:id="@+id/test_banner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+    </LinearLayout>
+</layout>

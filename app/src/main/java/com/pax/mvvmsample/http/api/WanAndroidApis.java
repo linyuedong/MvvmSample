@@ -16,7 +16,7 @@ public interface WanAndroidApis {
 
 
     @GET("article/list/{page}/json")
-    Observable<WanAndroidResponse<List<HomeArticleBean>>> getHomeArticleList(@Path("page") int page);
+    Observable<WanAndroidResponse<HomeArticleBean>> getHomeArticleList(@Path("page") int page);
 
     @GET("banner/json")
     Observable<WanAndroidResponse<List<BannerBean>>> getHomeBannerList();

@@ -12,33 +12,67 @@
 
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.wanandroid.home.HomeWanAnroidFragment">
+        tools:context=".ui.wanandroid.home.HomeWanAnroidFragment"
+        android:orientation="vertical">
+
+        <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+            <!--android:id="@+id/normal_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--<com.scwang.smartrefresh.header.PhoenixHeader-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/main_pager_recycler_view"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:items="@{vm.items}"-->
+                <!--app:itemBinding="@{vm.itemBinding}"-->
+                <!--app:layoutManager="android.support.v7.widget.LinearLayoutManager"-->
+                <!--android:visibility="visible" />-->
+
+            <!--<com.scwang.smartrefresh.header.TaurusHeader-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+        <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
+
+      <!--  <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:items="@{viewModel.items}"
+            app:itemBinding="@{viewModel.itemBinding}"/>-->
+
+
+        <!--<com.youth.head_banner.Banner-->
+            <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@+id/head_banner"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="100dp" />-->
+
+
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/normal_view"
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.scwang.smartrefresh.header.PhoenixHeader
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/main_pager_recycler_view"
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:items="@{vm.items}"
+                android:background="#fff"
+                android:overScrollMode="never"
                 app:itemBinding="@{vm.itemBinding}"
+                app:items="@{vm.items}"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                android:visibility="visible" />
-
-            <com.scwang.smartrefresh.header.TaurusHeader
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                />
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 </layout>

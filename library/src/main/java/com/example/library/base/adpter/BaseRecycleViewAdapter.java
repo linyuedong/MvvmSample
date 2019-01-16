@@ -20,12 +20,6 @@ public class BaseRecycleViewAdapter<T> extends BindingRecyclerViewAdapter<T> {
     @Override
     public void onBindBinding(ViewDataBinding binding, int bindingVariable, @LayoutRes int layoutId, final int position, final T item) {
         super.onBindBinding(binding, bindingVariable, layoutId, position, item);
-        binding.getRoot().setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return false;
-            }
-        });
 
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

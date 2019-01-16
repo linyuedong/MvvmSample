@@ -2,8 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-            <variable name="item" type="com.pax.mvvmsample.ui.wanandroid.home.HomeWanAndroidItemVM"/>
 
+        <variable
+            name="test"
+            type="com.pax.mvvmsample.ui.wanandroid.home.HomeWanAndroidItemVM"/>
 
     </data>
 
@@ -12,11 +14,10 @@
         android:layout_height="20dp">
 
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/myTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:text="@{item.mUrl}"/>
+            android:text="@{test.mUrl}"/>
 
     </LinearLayout>
 </layout>
