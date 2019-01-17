@@ -225,7 +225,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         mViewModel.mUIStatus.refreshState.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
-                Utils.checkNotNull(mRefreshLayout);
+                if(mRefreshLayout == null) return;
                 if(mRefreshLayout instanceof SmartRefreshLayout){
                     ((SmartRefreshLayout)mRefreshLayout).finishRefresh(aBoolean);
                 }
@@ -235,7 +235,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         mViewModel.mUIStatus.loadMoreState.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
-                Utils.checkNotNull(mRefreshLayout);
+                if(mRefreshLayout == null) return;
                 if(mRefreshLayout instanceof SmartRefreshLayout){
                     ((SmartRefreshLayout)mRefreshLayout).finishLoadMore(aBoolean);
                 }

@@ -1,4 +1,4 @@
-package com.pax.mvvmsample.ui.wanandroid.home;
+package com.example.library.base.adpter;
 
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;

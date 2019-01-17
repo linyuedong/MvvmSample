@@ -13,7 +13,7 @@ import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.app.Constants;
 import com.pax.mvvmsample.databinding.ActivityHomeBinding;
-import com.pax.mvvmsample.databinding.Test1Fragment;
+
 import com.pax.mvvmsample.ui.gank.GankFragment;
 import com.pax.mvvmsample.ui.wanandroid.WanAndroidFragment;
 
@@ -77,7 +77,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel
                     tagetFragment = GankFragment.newInstance();
                     break;
                 case Constants.FRAGMENT_TAG_SETTING:
-                    tagetFragment = Test1Fragment.newInstance();
+                    tagetFragment = GankFragment.newInstance();
                     break;
             }
         }

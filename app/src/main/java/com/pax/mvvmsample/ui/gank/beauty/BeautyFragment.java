@@ -37,7 +37,6 @@ public class BeautyFragment extends BaseFragment<FragmentBeautyBinding,BeautyVie
     protected void initViewAndEvent() {
         initView();
         initEvent();
-
         mViewModel.loadBeautyData();
     }
 
@@ -69,6 +68,7 @@ public class BeautyFragment extends BaseFragment<FragmentBeautyBinding,BeautyVie
     private void initView() {
         mBinding.recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         refreshLayout = mBinding.refreshLayout;
+        setRefreshLsyout(refreshLayout);
     }
 
 

@@ -1,10 +1,11 @@
-package com.pax.mvvmsample.ui.wanandroid.home;
+package com.example.library.base.adpter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.databinding.ViewDataBinding;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -15,77 +16,53 @@ import android.view.ViewGroup;
 import com.example.library.Utils.LogUtlis;
 
 import java.lang.ref.WeakReference;
-import java.util.Collection;
 
-public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingViewHolder> implements View.OnClickListener, View.OnLongClickListener{
+public abstract class MyBaseBindingRecyclerViewAdapter<T> extends RecyclerView.Adapter implements View.OnClickListener, View.OnLongClickListener {
     protected OnItemClickListener<T> mOnItemClickListener;
     private static final int ITEM_MODEL = -124;
     private final WeakReferenceOnListChangedCallback onListChangedCallback;
     private OnItemLongClickListener<T> mOnItemLongClickListener;
     private final LayoutInflater mLayoutInflater;
     private ObservableList<T> items;
-    private LayoutInflater inflater;
     private View headView;
     private final int HEAD_VIEW_TYPE = 1;
     private final int NORMAL_ITEM_TYPE = 2;
-    private int mLayoutId;
     private Context mContext;
-    private int mHeadViewLayoutId;
-    private int mItemVariableId;
 
-    public  ViewDataBinding mHeadBinding;
 
-    public BindingRecyclerViewAdapter(Context context, @Nullable Collection<T> items, int layoutId,int itemVariableId) {
+    public View view;
+
+    public MyBaseBindingRecyclerViewAdapter(Context context) {
         this.mContext = context;
-        this.mLayoutId = layoutId;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mItemVariableId = itemVariableId;
         this.onListChangedCallback = new WeakReferenceOnListChangedCallback<>(this);
-        setItems(items);
+        items = new ObservableArrayList<>();
+        notifyItemRangeInserted(0, this.items.size());
+        this.items.addOnListChangedCallback(onListChangedCallback);
 
     }
 
 
     @NonNull
     @Override
-    public BindingViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        if (inflater == null) {
-            inflater = LayoutInflater.from(viewGroup.getContext());
-        }
-        ViewDataBinding binding;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         if (viewType == HEAD_VIEW_TYPE) {
-            mHeadBinding = binding = DataBindingUtil.inflate(mLayoutInflater, mHeadViewLayoutId, viewGroup, false);
-            if(mHeadBinding == null){
-                LogUtlis.i("onCreateViewHolder mHeadBinding == null");
-            }else{
-                LogUtlis.i("onCreateViewHolder mHeadBinding != null");
-
-            }
+            return new HeadViewHolder(headView);
         } else {
-            binding = DataBindingUtil.inflate(mLayoutInflater, mLayoutId, viewGroup, false);
-
+            ViewDataBinding binding = DataBindingUtil.inflate(mLayoutInflater, this.getLayoutResId(viewType), viewGroup, false);
+            return new BindingViewHolder(binding);
         }
-        return new BindingViewHolder(binding);
-
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindingViewHolder bindingViewHolder, int position) {
-        if (getItemViewType(position) == HEAD_VIEW_TYPE){
-            mHeadBinding = bindingViewHolder.getBinding();
-            if(mHeadBinding == null){
-                LogUtlis.i("onBindViewHolder mHeadBinding == null");
-            }{
-                LogUtlis.i("onBindViewHolder mHeadBinding != null");
-
-            }
-            bindingViewHolder.getBinding().setVariable(headId,headvm);
-            bindingViewHolder.getBinding().executePendingBindings();
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+        if (getItemViewType(position) == HEAD_VIEW_TYPE) {
             return;
         }
         final T item = items.get(getRealPosition(position));
-        bindingViewHolder.getBinding().setVariable(mItemVariableId,item);
+        BindingViewHolder bindingViewHolder = (BindingViewHolder) viewHolder;
+        bindingViewHolder.getBinding().setVariable(this.getItemVariableId(), item);
         bindingViewHolder.getBinding().getRoot().setTag(ITEM_MODEL, item);
         bindingViewHolder.getBinding().getRoot().setOnClickListener(this);
         bindingViewHolder.getBinding().getRoot().setOnLongClickListener(this);
@@ -94,6 +71,11 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingV
 
     }
 
+    protected abstract @LayoutRes
+    int getLayoutResId(int viewType);
+
+    protected abstract @LayoutRes
+    int getItemVariableId();
 
     private int getRealPosition(int position) {
         if (headView != null) {
@@ -117,49 +99,28 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingV
         return NORMAL_ITEM_TYPE;
     }
 
-    public void setHeaderView(int headViewLayoutId) {
-        View view = null;
-        try {
-            view = mLayoutInflater.inflate(headViewLayoutId, null);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public class HeadViewHolder extends RecyclerView.ViewHolder {
+
+        public HeadViewHolder(View itemView) {
+            super(itemView);
+
+
         }
-        if(view != null){
-            headView = view;
-            mHeadViewLayoutId = headViewLayoutId;
-        }
+    }
+
+
+    public void setHeaderView(View view) {
+        this.headView = view;
         notifyDataSetChanged();
     }
 
-    private Object headvm;
-    private int headId;
-
-    public void setHeaderView(int headViewLayoutId,Object headvm, int headId) {
-        View view = null;
-        try {
-            view = mLayoutInflater.inflate(headViewLayoutId, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if(view != null){
-            this.headView = view;
-            this.mHeadViewLayoutId = headViewLayoutId;
-            this.headvm = headvm;
-            this.headId = headId;
-        }
-        notifyDataSetChanged();
-    }
 
     public View getHeaderView() {
         return headView;
     }
 
 
-    public ObservableList<T> getItems() {
-        return items;
-    }
-
-    public void setItems(@Nullable Collection<T> items) {
+    public void setItems(@Nullable ObservableList<T> items) {
         if (this.items == items) {
             return;
         }
@@ -168,24 +129,19 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingV
             this.items.removeOnListChangedCallback(onListChangedCallback);
             notifyItemRangeRemoved(0, this.items.size());
         }
-
-        if (items instanceof ObservableList) {
-            this.items = (ObservableList<T>) items;
-            notifyItemRangeInserted(0, this.items.size());
-            this.items.addOnListChangedCallback(onListChangedCallback);
-        } else if (items != null) {
-            this.items = new ObservableArrayList<>();
-            this.items.addOnListChangedCallback(onListChangedCallback);
-            this.items.addAll(items);
-        } else {
-            this.items = null;
-        }
+        this.items =  items;
+        notifyItemRangeInserted(0, this.items.size());
+        this.items.addOnListChangedCallback(onListChangedCallback);
     }
+
+    public ObservableList<T> getItems() {
+        return items;
+    }
+
 
     @Override
     public void onClick(View v) {
-        if (mOnItemClickListener != null)
-        {
+        if (mOnItemClickListener != null) {
             T item = (T) v.getTag(ITEM_MODEL);
             mOnItemClickListener.onClick(item);
         }
@@ -193,8 +149,7 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingV
 
     @Override
     public boolean onLongClick(View v) {
-        if (mOnItemLongClickListener != null)
-        {
+        if (mOnItemLongClickListener != null) {
             T item = (T) v.getTag(ITEM_MODEL);
             mOnItemLongClickListener.onLongClick(item);
             return true;
@@ -205,16 +160,17 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingV
 
     private static class WeakReferenceOnListChangedCallback<T> extends ObservableList.OnListChangedCallback {
 
-        private final WeakReference<BindingRecyclerViewAdapter<T>> adapterReference;
+        private final WeakReference<MyBaseBindingRecyclerViewAdapter<T>> adapterReference;
 
-        public WeakReferenceOnListChangedCallback(BindingRecyclerViewAdapter<T> bindingRecyclerViewAdapter) {
-            this.adapterReference = new WeakReference<>(bindingRecyclerViewAdapter);
+        public WeakReferenceOnListChangedCallback(MyBaseBindingRecyclerViewAdapter<T> myBaseBindingRecyclerViewAdapter) {
+            this.adapterReference = new WeakReference<>(myBaseBindingRecyclerViewAdapter);
         }
 
         @Override
         public void onChanged(ObservableList sender) {
             RecyclerView.Adapter adapter = adapterReference.get();
             if (adapter != null) {
+                LogUtlis.i("1");
                 adapter.notifyDataSetChanged();
             }
         }
@@ -239,6 +195,7 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingV
         public void onItemRangeMoved(ObservableList sender, int fromPosition, int toPosition, int itemCount) {
             RecyclerView.Adapter adapter = adapterReference.get();
             if (adapter != null) {
+                LogUtlis.i("2");
                 adapter.notifyItemMoved(fromPosition, toPosition);
             }
         }
@@ -246,8 +203,15 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingV
         @Override
         public void onItemRangeRemoved(ObservableList sender, int positionStart, int itemCount) {
             RecyclerView.Adapter adapter = adapterReference.get();
-            if (adapter != null) {
-                adapter.notifyItemRangeRemoved(positionStart, itemCount);
+            if (adapter != null ) {
+                if(((MyBaseBindingRecyclerViewAdapter) adapter).headView != null){
+                    //注意要加1
+                    adapter.notifyItemRangeRemoved(positionStart + 1, itemCount);
+                }else{
+                    adapter.notifyItemRangeRemoved(positionStart, itemCount);
+
+                }
+
             }
         }
     }
@@ -256,6 +220,7 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingV
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mOnItemClickListener = listener;
     }
+
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
         this.mOnItemLongClickListener = listener;
     }

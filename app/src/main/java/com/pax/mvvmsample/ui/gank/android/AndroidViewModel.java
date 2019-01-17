@@ -11,15 +11,12 @@ import com.example.library.Utils.RxUtils;
 import com.example.library.base.BaseViewModel;
 import com.example.library.base.adpter.BaseRecycleViewAdapter;
 import com.example.library.binding.command.BindAction0;
-import com.example.library.binding.command.BindAction1;
 import com.example.library.bus.event.SingleLiveEvent;
 import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.http.ApiHelper;
 import com.pax.mvvmsample.http.bean.GankItemBean;
 import com.pax.mvvmsample.http.response.GankHttpResponse;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
