@@ -2,39 +2,22 @@ package com.pax.mvvmsample.ui.wanandroid.home;
 
 import android.app.Application;
 import android.databinding.ObservableArrayList;
-import android.databinding.ObservableArrayMap;
 import android.databinding.ObservableList;
-import android.databinding.ViewDataBinding;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.library.Utils.RxUtils;
-import com.example.library.base.adpter.BaseRecycleViewAdapter;
+import com.example.library.base.BaseViewModel;
 import com.example.library.binding.command.BindAction0;
 import com.example.library.bus.event.SingleLiveEvent;
-import com.pax.mvvmsample.BR;
-import com.example.library.base.BaseViewModel;
-import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.http.ApiHelper;
 import com.pax.mvvmsample.http.bean.wanAndroid.BannerBean;
 import com.pax.mvvmsample.http.bean.wanAndroid.HomeArticleBean;
 import com.pax.mvvmsample.http.bean.wanAndroid.WanAndroidResponse;
-import com.pax.mvvmsample.ui.gank.android.AndroidItemViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiFunction;
-import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
-import me.tatarka.bindingcollectionadapter2.ItemBinding;
-import me.tatarka.bindingcollectionadapter2.OnItemBind;
-import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass;
 
 public class HomeWandroidVM extends BaseViewModel {
 

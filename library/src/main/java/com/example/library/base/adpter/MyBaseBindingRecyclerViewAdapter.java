@@ -17,17 +17,17 @@ import com.example.library.Utils.LogUtlis;
 
 import java.lang.ref.WeakReference;
 
-public abstract class MyBaseBindingRecyclerViewAdapter<T> extends RecyclerView.Adapter implements View.OnClickListener, View.OnLongClickListener {
+public abstract class MyBaseBindingRecyclerViewAdapter<T> extends RecyclerView.Adapter {
     protected OnItemClickListener<T> mOnItemClickListener;
     private static final int ITEM_MODEL = -124;
     private final WeakReferenceOnListChangedCallback onListChangedCallback;
     private OnItemLongClickListener<T> mOnItemLongClickListener;
-    private final LayoutInflater mLayoutInflater;
+    protected LayoutInflater mLayoutInflater;
     private ObservableList<T> items;
     private View headView;
     private final int HEAD_VIEW_TYPE = 1;
     private final int NORMAL_ITEM_TYPE = 2;
-    private Context mContext;
+    protected Context mContext;
 
 
     public View view;
@@ -64,12 +64,37 @@ public abstract class MyBaseBindingRecyclerViewAdapter<T> extends RecyclerView.A
         BindingViewHolder bindingViewHolder = (BindingViewHolder) viewHolder;
         bindingViewHolder.getBinding().setVariable(this.getItemVariableId(), item);
         bindingViewHolder.getBinding().getRoot().setTag(ITEM_MODEL, item);
-        bindingViewHolder.getBinding().getRoot().setOnClickListener(this);
-        bindingViewHolder.getBinding().getRoot().setOnLongClickListener(this);
+        convert(bindingViewHolder,item,position);
+        setClickListeners(bindingViewHolder.getBinding(),position,item);
         bindingViewHolder.getBinding().executePendingBindings();
 
 
     }
+
+    private void setClickListeners(final ViewDataBinding viewHolder, final int position, final T item) {
+        if (mOnItemClickListener != null) {
+            viewHolder.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onClick(viewHolder,position,item);
+                }
+            });
+        }
+        if (mOnItemLongClickListener != null) {
+            viewHolder.getRoot().setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mOnItemLongClickListener.onLongClick(viewHolder,position,item);
+                    return true;
+                }
+            });
+
+        }
+
+    }
+
+
+    protected abstract void convert(BindingViewHolder holder, T item, int position);
 
     protected abstract @LayoutRes
     int getLayoutResId(int viewType);
@@ -139,23 +164,7 @@ public abstract class MyBaseBindingRecyclerViewAdapter<T> extends RecyclerView.A
     }
 
 
-    @Override
-    public void onClick(View v) {
-        if (mOnItemClickListener != null) {
-            T item = (T) v.getTag(ITEM_MODEL);
-            mOnItemClickListener.onClick(item);
-        }
-    }
 
-    @Override
-    public boolean onLongClick(View v) {
-        if (mOnItemLongClickListener != null) {
-            T item = (T) v.getTag(ITEM_MODEL);
-            mOnItemLongClickListener.onLongClick(item);
-            return true;
-        }
-        return false;
-    }
 
 
     private static class WeakReferenceOnListChangedCallback<T> extends ObservableList.OnListChangedCallback {
@@ -227,12 +236,12 @@ public abstract class MyBaseBindingRecyclerViewAdapter<T> extends RecyclerView.A
 
     public static interface OnItemLongClickListener<T> {
 
-        public void onLongClick(T t);
+        public void onLongClick(ViewDataBinding binding, int position, T item);
     }
 
     public static interface OnItemClickListener<T> {
 
-        public void onClick(T t);
+        public void onClick(ViewDataBinding binding, int position, T item);
     }
 
 }

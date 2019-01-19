@@ -19,6 +19,8 @@ import com.pax.mvvmsample.ui.gank.android.AndroidFragment;
 import com.pax.mvvmsample.ui.gank.beauty.BeautyFragment;
 import com.pax.mvvmsample.ui.home.HomeActivity;
 import com.pax.mvvmsample.ui.wanandroid.home.HomeWanAnroidFragment;
+import com.pax.mvvmsample.ui.wanandroid.navigation.NavigationFragment;
+import com.pax.mvvmsample.ui.wanandroid.tree.TreeFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,8 +61,8 @@ public class WanAndroidFragment extends BaseFragment<FragmentWanAndroidBinding,W
         List<String> titles = Arrays.asList("首页", "知识体系", "导航", "其他");
         List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(HomeWanAnroidFragment.newInstance());
-        fragmentList.add(AndroidFragment.newInstance("iOS"));
-        fragmentList.add(AndroidFragment.newInstance("休息视频"));
+        fragmentList.add(TreeFragment.newInstance());
+        fragmentList.add(NavigationFragment.newInstance());
         fragmentList.add(BeautyFragment.newInstance());
         SimpleFragmentPagerAdapter myAdapter = new SimpleFragmentPagerAdapter(getChildFragmentManager(), fragmentList, titles);
         mBinding.vpWanAndroid.setAdapter(myAdapter);

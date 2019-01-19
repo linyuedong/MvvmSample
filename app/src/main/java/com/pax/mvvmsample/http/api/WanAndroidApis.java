@@ -2,6 +2,7 @@ package com.pax.mvvmsample.http.api;
 
 import com.pax.mvvmsample.http.bean.wanAndroid.BannerBean;
 import com.pax.mvvmsample.http.bean.wanAndroid.HomeArticleBean;
+import com.pax.mvvmsample.http.bean.wanAndroid.NavigationBean;
 import com.pax.mvvmsample.http.bean.wanAndroid.TreeBean;
 import com.pax.mvvmsample.http.bean.wanAndroid.WanAndroidResponse;
 
@@ -22,10 +23,10 @@ public interface WanAndroidApis {
     Observable<WanAndroidResponse<List<BannerBean>>> getHomeBannerList();
 
     @GET("tree/json")
-    Observable<WanAndroidResponse<TreeBean>> getTree();
+    Observable<WanAndroidResponse<List<TreeBean>>> getTree();
 
     @GET("navi/json")
-    Observable<WanAndroidResponse<TreeBean>> getNavition();
+    Observable<WanAndroidResponse<List<NavigationBean>>> getNavition();
 
 
 

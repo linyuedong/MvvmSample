@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.example.library.base.adpter.BindingViewHolder;
 import com.example.library.base.adpter.MyBaseBindingRecyclerViewAdapter;
 import com.pax.mvvmsample.BR;
 import com.example.library.base.BaseFragment;
@@ -104,6 +105,11 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new MyBaseBindingRecyclerViewAdapter<HomeWanAndroidItemVM>(getActivity()) {
+            @Override
+            protected void convert(BindingViewHolder holder, HomeWanAndroidItemVM item, int position) {
+
+            }
+
             @Override
             protected int getLayoutResId(int viewType) {
                 return R.layout.fragment_home_wanandroid_item;
