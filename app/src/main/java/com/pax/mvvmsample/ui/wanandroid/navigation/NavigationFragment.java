@@ -1,22 +1,19 @@
 package com.pax.mvvmsample.ui.wanandroid.navigation;
 
-import android.databinding.ObservableList;
-import android.databinding.ViewDataBinding;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
-import com.example.library.Utils.LogUtlis;
 import com.example.library.base.BaseFragment;
-import com.example.library.base.adpter.MyBaseBindingRecyclerViewAdapter;
 import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
-import com.pax.mvvmsample.databinding.FragmentNaviItemBinding;
 import com.pax.mvvmsample.databinding.FragmentNavigationBinding;
 
 
 public class NavigationFragment extends BaseFragment<FragmentNavigationBinding, NavigationViewModel> {
 
+
+    private int oldPosition = 0;
 
     public NavigationFragment() {
         // Required empty public constructor
@@ -46,9 +43,9 @@ public class NavigationFragment extends BaseFragment<FragmentNavigationBinding, 
     }
 
     private void initview() {
-        showContentView();
+        //showContentView();
 
-        RecyclerView rvNavi = mBinding.rvNavi;
+        final RecyclerView rvNavi = mBinding.rvNavi;
         RecyclerView rvNaviContent = mBinding.rvNaviContent;
 
         LinearLayoutManager naviLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -57,28 +54,38 @@ public class NavigationFragment extends BaseFragment<FragmentNavigationBinding, 
         rvNavi.setAdapter(navigationAdapter);
         navigationAdapter.setItems(mViewModel.naviItemViewModels);
 
-        LinearLayoutManager contentLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
+        final LinearLayoutManager contentLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvNaviContent.setLayoutManager(contentLayoutManager);
         NaviContentAdapter naviContentAdapter = new NaviContentAdapter(getContext());
         rvNaviContent.setAdapter(naviContentAdapter);
         naviContentAdapter.setItems(mViewModel.naviItemViewModels);
 
 
-        navigationAdapter.setOnItemClickListener(new MyBaseBindingRecyclerViewAdapter.OnItemClickListener<NaviItemViewModel>() {
+        navigationAdapter.setOnSelectListener(new NavigationAdapter.OnSelectListener() {
             @Override
-            public void onClick(ViewDataBinding binding, int position, NaviItemViewModel item) {
-                FragmentNaviItemBinding binding1 = (FragmentNaviItemBinding) binding;
-                ObservableList<NaviItemViewModel> items = navigationAdapter.getItems();
-                for(NaviItemViewModel naviItemViewModel:items){
-                    naviItemViewModel.setSelected(false);
+            public void onSelected(int position) {
+                contentLayoutManager.scrollToPositionWithOffset(position, 0);
+            }
+        });
+
+        rvNaviContent.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int currentPosition = contentLayoutManager.findFirstVisibleItemPosition();
+                if(currentPosition != oldPosition){
+                    navigationAdapter.selectItem(currentPosition);
+                    rvNavi.scrollToPosition(currentPosition);
+                    oldPosition = currentPosition;
                 }
-                item.setSelected(true);
-                binding1.tvChapterName.setSelected(true);
-                navigationAdapter.notifyDataSetChanged();
-                LogUtlis.i("position = " + binding1.tvChapterName.isSelected());
-                LogUtlis.i("position = " + item.isSelected());
-                LogUtlis.i("position = " + position);
-                Toast.makeText(getContext(),item.getChapterName(),Toast.LENGTH_SHORT).show();
             }
         });
 

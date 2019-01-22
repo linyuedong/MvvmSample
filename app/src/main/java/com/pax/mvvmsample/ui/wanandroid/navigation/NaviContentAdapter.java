@@ -21,7 +21,6 @@ public class NaviContentAdapter extends MyBaseBindingRecyclerViewAdapter<NaviIte
     public NaviContentAdapter(Context context) {
         super(context);
     }
-
     @Override
     protected void convert(BindingViewHolder holder, NaviItemViewModel item, int position) {
         FragmentNaviContentItemBinding binding = (FragmentNaviContentItemBinding)holder.getBinding();

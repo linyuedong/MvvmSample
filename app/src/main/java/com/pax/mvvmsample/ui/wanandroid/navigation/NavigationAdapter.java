@@ -6,8 +6,8 @@ import android.view.View;
 
 import com.example.library.base.adpter.BindingViewHolder;
 import com.example.library.base.adpter.MyBaseBindingRecyclerViewAdapter;
-import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.BR;
+import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.databinding.FragmentNaviItemBinding;
 
 public class NavigationAdapter extends MyBaseBindingRecyclerViewAdapter<NaviItemViewModel> {
@@ -18,20 +18,33 @@ public class NavigationAdapter extends MyBaseBindingRecyclerViewAdapter<NaviItem
 
     @Override
     protected void convert(BindingViewHolder holder, final NaviItemViewModel item, final int position) {
-//        final FragmentNaviItemBinding binding = (FragmentNaviItemBinding)holder.getBinding();
-//        binding.getRoot().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ObservableList<NaviItemViewModel> items = getItems();
-//                for(NaviItemViewModel naviItemViewModel:items){
-//                    naviItemViewModel.setSelected(false);
-//                }
-//                item.setSelected(true);
-//                binding.tvChapterName.setSelected(true);
-//                notifyDataSetChanged();
-//            }
-//        });
+        final FragmentNaviItemBinding binding = (FragmentNaviItemBinding) holder.getBinding();
+        binding.tvChapterName.setSelected(item.isSelected());
+        binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectItem(position);
+                if (listener != null) {
+                    listener.onSelected(position);
+                }
+            }
+        });
 
+
+    }
+
+    public void selectItem(int position) {
+        final ObservableList<NaviItemViewModel> data = getItems();
+        for (int i = 0; i < data.size(); i++) {
+            if (i == position) {
+                data.get(i).setSelected(true);
+            } else {
+                data.get(i).setSelected(false);
+            }
+
+        }
+
+        notifyDataSetChanged();
     }
 
     @Override
@@ -42,5 +55,15 @@ public class NavigationAdapter extends MyBaseBindingRecyclerViewAdapter<NaviItem
     @Override
     protected int getItemVariableId() {
         return BR.item;
+    }
+
+    private OnSelectListener listener;
+
+    public void setOnSelectListener(OnSelectListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnSelectListener {
+        void onSelected(int position);
     }
 }
