@@ -17,6 +17,10 @@
         android:orientation="vertical">
 
         <TextView
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/tvChapterName"
             android:text="@{item.chapterName}"
             android:layout_width="match_parent"
@@ -27,7 +31,7 @@
         app:max_select="-1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:padding="15dp">
     </com.zhy.view.flowlayout.TagFlowLayout>
 
     </LinearLayout>

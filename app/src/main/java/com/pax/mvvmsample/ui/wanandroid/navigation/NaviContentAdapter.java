@@ -16,8 +16,10 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class NaviContentAdapter extends MyBaseBindingRecyclerViewAdapter<NaviItemViewModel> {
+
     public NaviContentAdapter(Context context) {
         super(context);
     }
@@ -33,6 +35,8 @@ public class NaviContentAdapter extends MyBaseBindingRecyclerViewAdapter<NaviIte
                 Button tv = (Button) mLayoutInflater.inflate(R.layout.flowlayout_item,
                         mFlowLayout, false);
                 tv.setText(data);
+                tv.setTextColor(mContext.getResources().getColor(getTextColor()));
+                //tv.setBackgroundColor(mContext.getResources().getColor(getBackgroundColor()));
                 return tv;
             }
         });
@@ -49,6 +53,14 @@ public class NaviContentAdapter extends MyBaseBindingRecyclerViewAdapter<NaviIte
         });
     }
 
+    private int getTextColor() {
+        return colorArray[random.nextInt(10)];
+    }
+
+    private int getBackgroundColor() {
+        return colorArray[(random.nextInt(10) + 5)%10];
+    }
+
     @Override
     protected int getLayoutResId(int viewType) {
         return R.layout.fragment_navi_content_item;
@@ -58,4 +70,9 @@ public class NaviContentAdapter extends MyBaseBindingRecyclerViewAdapter<NaviIte
     protected int getItemVariableId() {
         return BR.item;
     }
+
+    public static int[] colorArray = {R.color.dimgray,R.color.orange,R.color.deeppink,R.color.lightcoral,
+            R.color.plum, R.color.darkgray,R.color.greenyellow,R.color.mediumslateblue,
+            R.color.dodgerblue,R.color.cyan};
+    Random random = new Random();
 }

@@ -37,33 +37,13 @@ public class NavigationViewModel extends BaseViewModel {
 
                     @Override
                     public void onNext(WanAndroidResponse<List<NavigationBean>> response) {
-                        if(response!=null){
-                            List<NavigationBean> data = response.getData();
-                            if(data!=null&&data.size()>0){
-                                for(int i=0;i<data.size();i++){
-                                    NaviItemViewModel naviItemViewModel = new NaviItemViewModel();
-                                    NavigationBean navigationBean = data.get(i);
-                                    String name = navigationBean.getName();
-                                    naviItemViewModel.setChapterName(name);
-                                    List<NavigationBean.ArticlesBean> articles = navigationBean.getArticles();
-                                    if(articles!=null&&articles.size()>0){
-                                        for(int j=0;j<articles.size();j++){
-                                            NavigationBean.ArticlesBean articlesBean = articles.get(j);
-                                            String title = articlesBean.getTitle();
-                                            String link = articlesBean.getLink();
-                                            naviItemViewModel.getTitles().add(title);
-                                            naviItemViewModel.getUrls().add(link);
-                                        }
-                                    }
-                                    naviItemViewModels.add(naviItemViewModel);
-                                }
-                            }
-                        }
+                        showContentView();
+                        dealData(response);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        showErrorSnackBar(e);
                     }
 
                     @Override
@@ -71,6 +51,31 @@ public class NavigationViewModel extends BaseViewModel {
 
                     }
                 });
+    }
+
+    private void dealData(WanAndroidResponse<List<NavigationBean>> response) {
+        if(response!=null){
+            List<NavigationBean> data = response.getData();
+            if(data!=null&&data.size()>0){
+                for(int i=0;i<data.size();i++){
+                    NaviItemViewModel naviItemViewModel = new NaviItemViewModel();
+                    NavigationBean navigationBean = data.get(i);
+                    String name = navigationBean.getName();
+                    naviItemViewModel.setChapterName(name);
+                    List<NavigationBean.ArticlesBean> articles = navigationBean.getArticles();
+                    if(articles!=null&&articles.size()>0){
+                        for(int j=0;j<articles.size();j++){
+                            NavigationBean.ArticlesBean articlesBean = articles.get(j);
+                            String title = articlesBean.getTitle();
+                            String link = articlesBean.getLink();
+                            naviItemViewModel.getTitles().add(title);
+                            naviItemViewModel.getUrls().add(link);
+                        }
+                    }
+                    naviItemViewModels.add(naviItemViewModel);
+                }
+            }
+        }
     }
 
 }

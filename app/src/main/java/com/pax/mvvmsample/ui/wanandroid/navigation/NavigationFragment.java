@@ -43,8 +43,6 @@ public class NavigationFragment extends BaseFragment<FragmentNavigationBinding, 
     }
 
     private void initview() {
-        //showContentView();
-
         final RecyclerView rvNavi = mBinding.rvNavi;
         RecyclerView rvNaviContent = mBinding.rvNaviContent;
 
@@ -95,7 +93,6 @@ public class NavigationFragment extends BaseFragment<FragmentNavigationBinding, 
 
     private void initData() {
         mViewModel.loadData();
-
     }
 
 }
