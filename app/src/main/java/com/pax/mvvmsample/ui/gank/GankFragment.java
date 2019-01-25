@@ -46,7 +46,6 @@ public class GankFragment extends BaseFragment<FragmentGankBinding, GankViewMode
 
     private void initTabLayout() {
         showContentView();
-        initActionBar();
         initTab();
     }
 
@@ -66,9 +65,7 @@ public class GankFragment extends BaseFragment<FragmentGankBinding, GankViewMode
         mBinding.tabGank.setupWithViewPager(mBinding.vpGank);
     }
 
-    private void initActionBar() {
-        ((HomeActivity)getActivity()).setActionBarTitle("Gank");
-    }
+
 
 
 }

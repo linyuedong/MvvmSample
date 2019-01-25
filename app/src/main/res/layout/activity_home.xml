@@ -16,6 +16,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".databinding.HomeActivity">
 
         <FrameLayout
@@ -31,8 +32,8 @@
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="?android:attr/windowBackground"
+            android:layout_height="45dp"
+            android:background="@color/color_page_bg"
             app:itemBackground="@null"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"

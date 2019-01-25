@@ -9,8 +9,6 @@ ext{
             versionName      : "1.0",
 
     ]
-    version = []
-    support = []
-    dependencies = []
+
 
 }

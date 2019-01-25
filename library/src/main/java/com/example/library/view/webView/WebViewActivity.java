@@ -123,12 +123,12 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
 //        return true;
 //    }
 //
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:// 返回键
-//               // handleFinish();
-//                break;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:// 返回键
+               handleFinish();
+                break;
 //            case R.id.actionbar_share:// 分享到
 //                String shareText = webView.getTitle() + webView.getUrl();
 //                BaseTools.share(WebViewActivity.this, shareText);
@@ -147,11 +147,11 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
 //                    webView.reload();
 //                }
 //                break;
-//            default:
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     private void initWebView() {

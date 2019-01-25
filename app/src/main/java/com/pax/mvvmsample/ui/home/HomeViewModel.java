@@ -30,11 +30,11 @@ public class HomeViewModel extends BaseViewModel {
         public Boolean call(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    uc.itemSelected.set(Constants.FRAGMENT_TAG_ZHIHUDAILY);
+                    uc.itemSelected.set(Constants.FRAGMENT_TAG_GANK);
                     //switchContent(FRAGMENT_TAG_ZHIHUDAILY);
                     return true;
                 case R.id.navigation_home2:
-                    uc.itemSelected.set(Constants.FRAGMENT_TAG_PICTURE);
+                    uc.itemSelected.set(Constants.FRAGMENT_TAG_WANANDEOID);
                     //switchContent(FRAGMENT_TAG_PICTURE);
                     return true;
                 case R.id.navigation_dashboard:

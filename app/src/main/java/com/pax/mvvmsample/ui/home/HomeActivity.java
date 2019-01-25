@@ -17,12 +17,11 @@ import com.pax.mvvmsample.databinding.ActivityHomeBinding;
 import com.pax.mvvmsample.ui.gank.GankFragment;
 import com.pax.mvvmsample.ui.wanandroid.WanAndroidFragment;
 
-public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel> {
+public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewModel> {
 
     private FrameLayout flContent;
     private BottomNavigationView navigation;
-    private String currentFragmentTag ;
-
+    private String currentFragmentTag;
 
 
     @Override
@@ -37,19 +36,21 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel
 
     @Override
     protected void initViewAndData() {
-        switchContent(Constants.FRAGMENT_TAG_ZHIHUDAILY);
-
-   mViewModel.uc.itemSelected.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-       @Override
-       public void onPropertyChanged(Observable sender, int propertyId) {
-           String fragmentName = mViewModel.uc.itemSelected.get();
-           LogUtlis.i("fragmentName = " + fragmentName);
-           switchContent(fragmentName);
-       }
-   });
+        displayHomeAsUpEnabled(false);
+        switchContent(Constants.FRAGMENT_TAG_GANK);
+        setCenterTitle(Constants.FRAGMENT_TAG_GANK);
+        //setTitle(Constants.FRAGMENT_TAG_GANK);
+        mViewModel.uc.itemSelected.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                String fragmentName = mViewModel.uc.itemSelected.get();
+                LogUtlis.i("fragmentName = " + fragmentName);
+                switchContent(fragmentName);
+                setCenterTitle(fragmentName);
+            }
+        });
 
     }
-
 
 
     private void switchContent(String tag) {
@@ -67,10 +68,10 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel
         Fragment tagetFragment = mFragmentManager.findFragmentByTag(tag);
         if (tagetFragment == null) {
             switch (tag) {
-                case Constants.FRAGMENT_TAG_ZHIHUDAILY:
+                case Constants.FRAGMENT_TAG_GANK:
                     tagetFragment = GankFragment.newInstance();
                     break;
-                case Constants.FRAGMENT_TAG_PICTURE:
+                case Constants.FRAGMENT_TAG_WANANDEOID:
                     tagetFragment = WanAndroidFragment.newInstance("");
                     break;
                 case Constants.FRAGMENT_TAG_VIDEO:
@@ -82,8 +83,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel
             }
         }
 
-        if(tagetFragment != null){
-            if(!tagetFragment.isAdded()){
+        if (tagetFragment != null) {
+            if (!tagetFragment.isAdded()) {
                 ft.add(R.id.content, tagetFragment, tag);
             }
             ft.show(tagetFragment);
@@ -91,13 +92,6 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding,HomeViewModel
         ft.commit();
         currentFragmentTag = tag;
     }
-
-
-    public void setActionBarTitle(String title){
-         getSupportActionBar().setTitle(title);
-    }
-
-
 
 
 }

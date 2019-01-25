@@ -53,7 +53,6 @@ public class WanAndroidFragment extends BaseFragment<FragmentWanAndroidBinding,W
     @Override
     protected void initViewAndEvent() {
         showContentView();
-        initActionBar();
         initTab();
     }
 
@@ -73,9 +72,6 @@ public class WanAndroidFragment extends BaseFragment<FragmentWanAndroidBinding,W
         mBinding.tabWanAndroid.setupWithViewPager(mBinding.vpWanAndroid);
     }
 
-    private void initActionBar() {
-        ((HomeActivity)getActivity()).setActionBarTitle("Gank");
-    }
 
     @Override
     protected int initBR() {

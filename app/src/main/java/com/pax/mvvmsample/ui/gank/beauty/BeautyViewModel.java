@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import com.example.library.Utils.LogUtlis;
 import com.example.library.Utils.RxUtils;
 import com.example.library.base.BaseViewModel;
+import com.example.library.base.adpter.BaseRecycleViewAdapter;
 import com.example.library.binding.command.BindAction0;
 import com.example.library.binding.command.BindAction1;
 import com.example.library.bus.event.SingleLiveEvent;
@@ -17,6 +18,7 @@ import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.http.ApiHelper;
 import com.pax.mvvmsample.http.bean.GankItemBean;
 import com.pax.mvvmsample.http.response.GankHttpResponse;
+import com.pax.mvvmsample.ui.gank.android.AndroidItemViewModel;
 import com.pax.mvvmsample.ui.gank.android.AndroidViewModel;
 
 import java.util.List;
@@ -36,6 +38,9 @@ public class BeautyViewModel extends BaseViewModel {
     }
     public final ObservableList<BeautyItemViewModel> items = new ObservableArrayList<>();
     public final ItemBinding<BeautyItemViewModel> itemBinding = ItemBinding.of(BR.item, R.layout.fragment_beauty_item);
+
+    public BaseRecycleViewAdapter<BeautyItemViewModel> adapter = new BaseRecycleViewAdapter<BeautyItemViewModel>();
+
 
     public SingleLiveEvent<Throwable> status = new SingleLiveEvent<>();
     public SingleLiveEvent<Boolean> refreshState = new SingleLiveEvent<>();

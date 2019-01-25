@@ -31,6 +31,7 @@
                 android:overScrollMode="never"
                 app:itemBinding="@{vm.itemBinding}"
                 app:items="@{vm.items}"
+                app:adapter="@{vm.adapter}"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 />
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>

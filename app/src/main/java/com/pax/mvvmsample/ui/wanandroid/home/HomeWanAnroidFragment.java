@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.library.base.adpter.BindingViewHolder;
 import com.example.library.base.adpter.MyBaseBindingRecyclerViewAdapter;
 import com.pax.mvvmsample.BR;
@@ -90,7 +91,6 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
                 banner.setIndicatorGravity(BannerConfig.CENTER);
                 //banner设置方法全部调用完毕时最后调用
                 banner.start();
-                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -135,10 +135,15 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
     }
 
     public class GlideImageLoader extends ImageLoader {
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.mipmap.img_one_bi_one).
+                error(R.mipmap.img_one_bi_one);
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
-            Glide.with(context).load((String) path).into(imageView);
-
+            Glide.with(imageView.getContext())
+                    .asBitmap()
+                    .apply(requestOptions)
+                    .load((String) path)
+                    .into(imageView);
         }
 
     }
