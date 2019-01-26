@@ -50,7 +50,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation project(':library')
 
-
     // 仅在debug包启用BlockCanary进行卡顿监控和提示的话，可以这么用
     debugImplementation 'com.github.markzhai:blockcanary-android:1.5.0'
     releaseImplementation 'com.github.markzhai:blockcanary-no-op:1.5.0'
@@ -81,5 +80,7 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
 
     implementation 'com.hyman:flowlayout-lib:1.1.2'
+
+    implementation 'com.github.chrisbanes:PhotoView:2.1.4'
 
 }
