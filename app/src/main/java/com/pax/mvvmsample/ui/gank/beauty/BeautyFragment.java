@@ -2,6 +2,7 @@ package com.pax.mvvmsample.ui.gank.beauty;
 
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.databinding.ObservableList;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -14,6 +15,8 @@ import com.pax.mvvmsample.databinding.FragmentBeautyBinding;
 import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.ui.gank.beauty.bigphoto.BigPhotoActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import java.util.ArrayList;
 
 public class BeautyFragment extends BaseFragment<FragmentBeautyBinding,BeautyViewModel> {
 
@@ -76,8 +79,15 @@ public class BeautyFragment extends BaseFragment<FragmentBeautyBinding,BeautyVie
         mViewModel.adapter.setOnItemClickListener(new BaseRecycleViewAdapter.OnItemClickListener<BeautyItemViewModel>() {
             @Override
             public void onClick(View v, int position, BeautyItemViewModel item) {
+                ObservableList<BeautyItemViewModel> items = mViewModel.items;
+                ArrayList<String> urls = new ArrayList<>();
+                for(int i = 0;i<items.size();i++){
+                    urls.add(items.get(i).mUrl);
+                }
+
                 Intent intent = new Intent(getContext(),BigPhotoActivity.class);
-                intent.putExtra("url",item.mUrl);
+                intent.putExtra("position",position);
+                intent.putStringArrayListExtra("urls",urls);
                 startActivity(intent);
             }
         });
