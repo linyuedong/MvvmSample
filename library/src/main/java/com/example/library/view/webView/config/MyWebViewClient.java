@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.library.Utils.NetworkUtils;
-import com.example.library.Utils.Utils;
+import com.example.library.Utils.MyUtils;
 import com.example.library.view.webView.WebViewActivity;
 
 /**
@@ -104,7 +104,7 @@ public class MyWebViewClient extends WebViewClient {
         } else {
             startActivity(url);
         }
-        if (Utils.isApplicationAvilible(activity, appPackageName)) {
+        if (MyUtils.isApplicationAvilible(activity, appPackageName)) {
             startActivity(url);
         }
     }

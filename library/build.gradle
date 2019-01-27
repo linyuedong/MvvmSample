@@ -73,7 +73,8 @@ dependencies {
     api 'com.jakewharton.rxrelay2:rxrelay:2.1.0'
     //rxlifecycle
     api 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:2.2.2'
-
+    //rxpermissions
+    api 'com.github.tbruyelle:rxpermissions:0.10.2'
     //gson
     api 'com.google.code.gson:gson:2.8.5'
 

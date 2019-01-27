@@ -59,7 +59,7 @@
             />
 
         <ImageView
-            android:id="@+id/ivSave"
+            android:id="@+id/ivShare"
             android:layout_alignRight="@+id/ivDownload"
             android:layout_marginRight="50dp"
             android:layout_width="25dp"

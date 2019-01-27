@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,7 +18,6 @@ import android.widget.RelativeLayout;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.library.R;
 import com.example.library.Utils.LogUtlis;
-import com.example.library.Utils.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.lang.reflect.ParameterizedType;

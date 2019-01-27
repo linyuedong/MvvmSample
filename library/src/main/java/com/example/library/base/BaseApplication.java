@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.library.Utils.Utils;
 import com.example.library.Utils.LogUtlis;
 import com.github.naturs.logger.Logger;
 import com.github.naturs.logger.android.adapter.AndroidLogAdapter;
@@ -25,6 +26,7 @@ public class BaseApplication extends Application {
         initDebugStatus();
         initLogger();
         initActivityLifecycle();
+        Utils.init(mApplication);
     }
 
     private void initLogger() {

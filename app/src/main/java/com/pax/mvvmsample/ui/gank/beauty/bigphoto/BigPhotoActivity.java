@@ -1,18 +1,9 @@
 package com.pax.mvvmsample.ui.gank.beauty.bigphoto;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -24,17 +15,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
+import com.example.library.Utils.FileUtils;
 import com.example.library.Utils.LogUtlis;
+import com.example.library.Utils.PermissionsUtils;
 import com.example.library.Utils.RxUtils;
+import com.example.library.Utils.ToastUtils;
+import com.example.library.component.Constants;
 import com.example.library.view.statusBar.StatusBarUtil;
 import com.pax.mvvmsample.BuildConfig;
-import com.pax.mvvmsample.MainActivity;
 import com.pax.mvvmsample.R;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
@@ -42,9 +34,7 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 public class BigPhotoActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -54,21 +44,43 @@ public class BigPhotoActivity extends AppCompatActivity implements View.OnClickL
     private ViewPager vpPhoto;
     private Button btSource;
     private ImageView ivDownload;
-    private ImageView ivSave;
+    private ImageView ivShare;
     private TextView tvHint;
-
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.WRITE_EXTERNAL_STORAGE" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_big_photo);
-        verifyStoragePermissions(this);
         getIntentData();
         initView();
+        initData();
+
+    }
+
+    private void initData() {
+        requestPermission();
+        mCurrentPosition = mFirstPosition;
+
+    }
+
+    private void requestPermission() {
+        final RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions
+                .requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(permission -> { // will emit 2 Permission objects
+                    if (permission.granted) {
+                        LogUtlis.i("permission.granted");
+                        // `permission.name` is granted !
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+                        LogUtlis.i("permission.shouldShowRequestPermissionRationale");
+                        // Denied permission without ask never again
+                    } else {
+                        LogUtlis.i("Denied permission with ask never again");
+                        // Denied permission with ask never again
+                        // Need to go to the settings
+                        PermissionsUtils.gotoPermission();
+                    }
+                });
 
     }
 
@@ -83,10 +95,10 @@ public class BigPhotoActivity extends AppCompatActivity implements View.OnClickL
         tvHint = findViewById(R.id.tvHint);
         btSource = findViewById(R.id.btSource);
         ivDownload = findViewById(R.id.ivDownload);
-        ivSave = findViewById(R.id.ivSave);
+        ivShare = findViewById(R.id.ivShare);
         vpPhoto = findViewById(R.id.vpPhoto);
         btSource.setOnClickListener(this);
-        ivSave.setOnClickListener(this);
+        ivShare.setOnClickListener(this);
         ivDownload.setOnClickListener(this);
         BigPhotoPagerAdapter samplePagerAdapter = new BigPhotoPagerAdapter(this, mUrls, mFirstPosition);
         vpPhoto.setAdapter(samplePagerAdapter);
@@ -104,8 +116,9 @@ public class BigPhotoActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btSource:
+                ToastUtils.showShort("抱歉，没有原图");
                 break;
-            case R.id.ivSave:
+            case R.id.ivShare:
                 shareImage();
                 break;
             case R.id.ivDownload:
@@ -125,18 +138,22 @@ public class BigPhotoActivity extends AppCompatActivity implements View.OnClickL
                         .load(mUrls.get(mCurrentPosition))
                         .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                         .get();
-                String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "AAA";
-                File appDir = new File(storePath);
+                emitter.onNext(file);
+            }
+        }).map(new Function<File, File>() {
+            @Override
+            public File apply(File file) throws Exception {
+                File appDir = new File(Constants.EXSD_PATH + "AAA");
                 if (!appDir.exists()) {
                     appDir.mkdir();
                 }
-
                 String fileName = System.currentTimeMillis() + ".jpg";
                 File targetfile = new File(appDir, fileName);
-                copy(file,targetfile);
-                emitter.onNext(targetfile);
+                FileUtils.copy(file,targetfile);
+                return targetfile;
             }
-        }).compose(RxUtils.<File>rxSchedulersHelper())
+        })
+                .compose(RxUtils.<File>rxSchedulersHelper())
                 .as(RxUtils.<File>bindLifecycle(BigPhotoActivity.this))
                 .subscribe(new Observer<File>() {
                     @Override
@@ -146,9 +163,7 @@ public class BigPhotoActivity extends AppCompatActivity implements View.OnClickL
 
                     @Override
                     public void onNext(File file) {
-                        String absolutePath = file.getAbsolutePath();
-                        LogUtlis.i("absolutePath = " + absolutePath);
-                        //MediaScannerConnection.scanFile(file.getAbsolutePath(), "image/jpeg");
+                        ToastUtils.showShort("保存成功");
                         Uri uri = Uri.fromFile(file);
                         getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
                     }
@@ -166,125 +181,56 @@ public class BigPhotoActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    public static void verifyStoragePermissions(Activity activity) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
-            }
-        }
-
-    }
-
-
-        //保存文件到指定路径
-        public static boolean saveImageToGallery(Context context, Bitmap bmp) {
-            // 首先保存图片
-            String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "dearxy";
-            File appDir = new File(storePath);
-            if (!appDir.exists()) {
-                appDir.mkdir();
-            }
-            String fileName = System.currentTimeMillis() + ".jpg";
-            File file = new File(appDir, fileName);
-            try {
-                FileOutputStream fos = new FileOutputStream(file);
-                //通过io流的方式来压缩保存图片
-                boolean isSuccess = bmp.compress(Bitmap.CompressFormat.JPEG, 60, fos);
-                fos.flush();
-                fos.close();
-
-                //把文件插入到系统图库
-                //MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
-
-                //保存图片后发送广播通知更新数据库
-                Uri uri = Uri.fromFile(file);
-                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-                if (isSuccess) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-
-
-    public static void copy(File source, File target) {
-        FileInputStream fileInputStream = null;
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileInputStream = new FileInputStream(source);
-            fileOutputStream = new FileOutputStream(target);
-            byte[] buffer = new byte[1024];
-            while (fileInputStream.read(buffer) > 0) {
-                fileOutputStream.write(buffer);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fileInputStream != null) {
-                    fileInputStream.close();
-                }
-                if (fileOutputStream != null) {
-                    fileOutputStream.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 
     private void shareImage() {
-        new ShareTask(this).execute(mUrls.get(mCurrentPosition));
+        Observable.create(new ObservableOnSubscribe<File>() {
+            @Override
+            public void subscribe(ObservableEmitter<File> emitter) throws Exception {
+                File file = Glide
+                        .with(getApplicationContext())
+                        .downloadOnly()
+                        .load(mUrls.get(mCurrentPosition))
+                        .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .get();
+                emitter.onNext(file);
+            }
+        }).compose(RxUtils.<File>rxSchedulersHelper())
+                .as(RxUtils.<File>bindLifecycle(BigPhotoActivity.this))
+                .subscribe(new Observer<File>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(File file) {
+                        Uri uri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", file);
+                        share(uri);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
     }
 
-    class ShareTask extends AsyncTask<String, Void, File> {
-        private final Context context;
-
-        public ShareTask(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        protected File doInBackground(String... params) {
-            String url = params[0]; // should be easy to extend to share multiple images at once
-            try {
-                return Glide
-                        .with(context)
-                        .downloadOnly()
-                        .load(url)
-                        .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                        .get() // needs to be called on background thread
-                        ;
-            } catch (Exception ex) {
-                LogUtlis.w("Sharing " + url + " failed", ex);
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(File result) {
-            if (result == null) {
-                return;
-            }
-            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", result);
-            share(uri);
-        }
-
-        private void share(Uri uri) {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("image/jpeg");
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Shared image");
-            intent.putExtra(Intent.EXTRA_TEXT, "Look what I found!");
-            intent.putExtra(Intent.EXTRA_STREAM, uri);
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            context.startActivity(Intent.createChooser(intent, "Share image"));
-        }
+    private void share(Uri uri) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/jpeg");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Shared image");
+        intent.putExtra(Intent.EXTRA_TEXT, "Look what I found!");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        startActivity(Intent.createChooser(intent, "Share image"));
     }
 
     class MyOnPageChangeListener implements OnPageChangeListener {
