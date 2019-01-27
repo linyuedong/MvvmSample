@@ -23,9 +23,7 @@ public class BigPhotoPagerAdapter extends PagerAdapter {
     @Override
     public View instantiateItem(ViewGroup container, int position) {
         PhotoView photoView = new PhotoView(container.getContext());
-        //photoView.setImageResource(sDrawables[position]);
         Glide.with(mContext).load(mData.get(position)).into(photoView);
-        // Now just add PhotoView to ViewPager and return it
         container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return photoView;
     }
