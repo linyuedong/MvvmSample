@@ -11,16 +11,18 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.library.base.BaseFragment;
 import com.example.library.base.adpter.BindingViewHolder;
 import com.example.library.base.adpter.MyBaseBindingRecyclerViewAdapter;
+import com.example.library.view.webView.WebViewActivity;
 import com.pax.mvvmsample.BR;
-import com.example.library.base.BaseFragment;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.databinding.FragmentHomeWanAnroidBinding;
 import com.pax.mvvmsample.http.bean.wanAndroid.BannerBean;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import java.util.List;
 
 public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBinding, HomeWandroidVM> {
 
-
+    ArrayList<String> mBannerUrls = new ArrayList<>();
     private Banner banner;
     private MyBaseBindingRecyclerViewAdapter<HomeWanAndroidItemVM> adapter;
 
@@ -68,9 +70,11 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
             public void onChanged(@Nullable List<BannerBean> bannerBeans) {
                 ArrayList<String> imageUrls = new ArrayList<>();
                 ArrayList<String> titles = new ArrayList<>();
+                mBannerUrls.clear();
                 for (BannerBean bean : bannerBeans) {
                     imageUrls.add(bean.getImagePath());
                     titles.add(bean.getTitle());
+                    mBannerUrls.add(bean.getUrl());
                 }
                //设置banner样式
                 banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE);
@@ -81,12 +85,12 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
                 //banner设置方法全部调用完毕时最后调用
                 //设置banner动画效果
                 banner.setBannerAnimation(Transformer.DepthPage);
-                //设置标题集合（当banner样式有显示title时）
+                //设置标题集合（当banner样式有显示title时） 
                 banner.setBannerTitles(titles);
                 //设置自动轮播，默认为true
                 banner.isAutoPlay(true);
                 //设置轮播时间
-                banner.setDelayTime(1500);
+                banner.setDelayTime(2000);
                 //设置指示器位置（当banner模式中有指示器时）
                 banner.setIndicatorGravity(BannerConfig.CENTER);
                 //banner设置方法全部调用完毕时最后调用
@@ -98,6 +102,12 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
     private void initView() {
         setRefreshLsyout(mBinding.refreshLayout);
         initRecycleView();
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                WebViewActivity.loadUrl(getContext(),mBannerUrls.get(position));
+            }
+        });
     }
 
     private void initRecycleView() {

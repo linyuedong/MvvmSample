@@ -29,11 +29,11 @@ public class HomeViewModel extends BaseViewModel {
         @Override
         public Boolean call(MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_gank:
                     uc.itemSelected.set(Constants.FRAGMENT_TAG_GANK);
                     //switchContent(FRAGMENT_TAG_ZHIHUDAILY);
                     return true;
-                case R.id.navigation_home2:
+                case R.id.navigation_wanAndroid:
                     uc.itemSelected.set(Constants.FRAGMENT_TAG_WANANDEOID);
                     //switchContent(FRAGMENT_TAG_PICTURE);
                     return true;
@@ -41,7 +41,7 @@ public class HomeViewModel extends BaseViewModel {
                     uc.itemSelected.set(Constants.FRAGMENT_TAG_VIDEO);
                     //switchContent(FRAGMENT_TAG_VIDEO);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_my:
                     uc.itemSelected.set(Constants.FRAGMENT_TAG_SETTING);
                     //switchContent(FRAGMENT_TAG_SETTING);
                     return true;

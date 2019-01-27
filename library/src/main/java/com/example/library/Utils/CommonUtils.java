@@ -10,7 +10,7 @@ import com.example.library.base.BaseApplication;
 
 import java.util.List;
 
-public class MyUtils {
+public class CommonUtils {
 
 
     public static Context getAppContext(){
