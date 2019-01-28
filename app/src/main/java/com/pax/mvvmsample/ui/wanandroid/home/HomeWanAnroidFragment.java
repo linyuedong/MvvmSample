@@ -14,9 +14,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.library.base.BaseFragment;
 import com.example.library.base.adpter.BindingViewHolder;
 import com.example.library.base.adpter.MyBaseBindingRecyclerViewAdapter;
-import com.example.library.view.webView.WebViewActivity;
 import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
+import com.pax.mvvmsample.component.agentweb.AgentWebActivity;
 import com.pax.mvvmsample.databinding.FragmentHomeWanAnroidBinding;
 import com.pax.mvvmsample.http.bean.wanAndroid.BannerBean;
 import com.youth.banner.Banner;
@@ -105,7 +105,7 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                WebViewActivity.loadUrl(getContext(),mBannerUrls.get(position));
+                AgentWebActivity.loadUrl(getContext(),mBannerUrls.get(position));
             }
         });
     }

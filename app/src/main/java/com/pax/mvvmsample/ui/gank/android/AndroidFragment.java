@@ -1,11 +1,7 @@
 package com.pax.mvvmsample.ui.gank.android;
-import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.example.library.Utils.LogUtlis;
@@ -15,8 +11,6 @@ import com.example.library.view.webView.WebViewActivity;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.databinding.FragmentAndroidBinding;
 import com.pax.mvvmsample.BR;
-import com.pax.mvvmsample.databinding.WebActivity;
-import com.pax.mvvmsample.ui.wanandroid.WanAndroidFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -82,7 +76,6 @@ public class AndroidFragment extends BaseFragment<FragmentAndroidBinding, Androi
            @Override
            public void onClick(View v, int position, AndroidItemViewModel item) {
                Intent intent = new Intent();
-               intent.setClass(v.getContext(), WebActivity.class);
                intent.putExtra("desc",item.bean.getDesc());
                intent.putExtra("url",item.bean.getUrl());
                WebViewActivity.loadUrl(getActivity(),item.bean.getUrl(),item.bean.getDesc());

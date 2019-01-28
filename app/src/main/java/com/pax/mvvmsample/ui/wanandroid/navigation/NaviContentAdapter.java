@@ -10,6 +10,7 @@ import com.example.library.base.adpter.MyBaseBindingRecyclerViewAdapter;
 import com.example.library.view.webView.WebViewActivity;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.BR;
+import com.pax.mvvmsample.component.agentweb.AgentWebActivity;
 import com.pax.mvvmsample.databinding.FragmentNaviContentItemBinding;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -36,7 +37,6 @@ public class NaviContentAdapter extends MyBaseBindingRecyclerViewAdapter<NaviIte
                         mFlowLayout, false);
                 tv.setText(data);
                 tv.setTextColor(mContext.getResources().getColor(getTextColor()));
-//                tv.setBackgroundColor(mContext.getResources().getColor(getBackgroundColor()));
                 return tv;
             }
         });
@@ -46,8 +46,7 @@ public class NaviContentAdapter extends MyBaseBindingRecyclerViewAdapter<NaviIte
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent)
             {
-                Toast.makeText(mContext, secongTitles.get(position), Toast.LENGTH_SHORT).show();
-                WebViewActivity.loadUrl(mContext,urls.get(position),secongTitles.get(position));
+                AgentWebActivity.loadUrl(mContext,urls.get(position),secongTitles.get(position));
                 return true;
             }
         });
