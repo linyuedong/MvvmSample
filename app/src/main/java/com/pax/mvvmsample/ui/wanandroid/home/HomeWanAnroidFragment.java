@@ -2,6 +2,7 @@ package com.pax.mvvmsample.ui.wanandroid.home;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.databinding.ViewDataBinding;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.component.agentweb.AgentWebActivity;
 import com.pax.mvvmsample.databinding.FragmentHomeWanAnroidBinding;
+import com.pax.mvvmsample.databinding.FragmentHomeWanandroidItemBinding;
 import com.pax.mvvmsample.http.bean.wanAndroid.BannerBean;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -27,6 +29,7 @@ import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBinding, HomeWandroidVM> {
@@ -35,6 +38,10 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
     private Banner banner;
     private MyBaseBindingRecyclerViewAdapter<HomeWanAndroidItemVM> adapter;
 
+    public static int[] icons = {R.drawable.ic_boy_one,R.drawable.ic_boy_two,R.drawable.ic_boy_three,R.drawable.ic_boy_four,R.drawable.ic_boy_five,
+            R.drawable.ic_girl_one,R.drawable.ic_girl_two,R.drawable.ic_girl_three,R.drawable.ic_girl_four,R.drawable.ic_girl_five};
+
+    Random random = new Random();
     public HomeWanAnroidFragment() {
 
     }
@@ -117,7 +124,8 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
         adapter = new MyBaseBindingRecyclerViewAdapter<HomeWanAndroidItemVM>(getActivity()) {
             @Override
             protected void convert(BindingViewHolder holder, HomeWanAndroidItemVM item, int position) {
-
+                FragmentHomeWanandroidItemBinding binding = (FragmentHomeWanandroidItemBinding)holder.getBinding();
+                binding.iconAndroidHome.setImageResource(icons[random.nextInt(10)]);
             }
 
             @Override
@@ -136,6 +144,16 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
         adapter.setHeaderView(banner);
         adapter.setItems(mViewModel.items);
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new MyBaseBindingRecyclerViewAdapter.OnItemClickListener<HomeWanAndroidItemVM>() {
+            @Override
+            public void onClick(ViewDataBinding binding, int position, HomeWanAndroidItemVM item) {
+                AgentWebActivity.loadUrl(getContext(),item.mUrl);
+            }
+        });
+
+
+
     }
 
     @Override

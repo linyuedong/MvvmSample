@@ -57,12 +57,13 @@ public class HomeWandroidVM extends BaseViewModel {
             @Override
             public void onNext(WanAndroidResponse<HomeArticleBean> listWanAndroidResponse) {
                 showContentView();
-                HomeArticleBean data = listWanAndroidResponse.getData();
-                if (data != null) {
-                    List<HomeArticleBean.DatasBean> datas = data.getDatas();
+                HomeArticleBean homeArticleBean = listWanAndroidResponse.getData();
+                if (homeArticleBean != null) {
+                    List<HomeArticleBean.DatasBean> datas = homeArticleBean.getDatas();
                     if (datas != null && datas.size() > 0) {
                         for (int i = 0; i < datas.size(); i++) {
-                            items.add(new HomeWanAndroidItemVM(datas.get(i).getTitle()));
+                            HomeArticleBean.DatasBean data = datas.get(i);
+                            items.add(new HomeWanAndroidItemVM(data.getTitle(),data.getAuthor(),data.getChapterName(),data.getSuperChapterName(),data.getNiceDate(),data.getLink()));
                         }
                         finishLoadMore(true);
                     } else {
@@ -101,13 +102,14 @@ public class HomeWandroidVM extends BaseViewModel {
             @Override
             public void onNext(WanAndroidResponse<HomeArticleBean> listWanAndroidResponse) {
                 showContentView();
-                HomeArticleBean data = listWanAndroidResponse.getData();
-                if (data != null) {
-                    List<HomeArticleBean.DatasBean> datas = data.getDatas();
+                HomeArticleBean homeArticleBean = listWanAndroidResponse.getData();
+                if (homeArticleBean != null) {
+                    List<HomeArticleBean.DatasBean> datas = homeArticleBean.getDatas();
                     if (datas != null && datas.size() > 0) {
                         items.clear();
                         for (int i = 0; i < datas.size(); i++) {
-                           items.add(new HomeWanAndroidItemVM(datas.get(i).getTitle()));
+                            HomeArticleBean.DatasBean data = datas.get(i);
+                            items.add(new HomeWanAndroidItemVM(data.getTitle(),data.getAuthor(),data.getChapterName(),data.getSuperChapterName(),data.getNiceDate(),data.getLink()));
                         }
                         finishRefresh(true);
                     } else {
