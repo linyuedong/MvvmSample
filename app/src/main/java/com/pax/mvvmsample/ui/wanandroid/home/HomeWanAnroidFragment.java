@@ -2,7 +2,6 @@ package com.pax.mvvmsample.ui.wanandroid.home;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
-import android.databinding.ViewDataBinding;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -144,14 +143,6 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
         adapter.setHeaderView(banner);
         adapter.setItems(mViewModel.items);
         recyclerView.setAdapter(adapter);
-
-        adapter.setOnItemClickListener(new MyBaseBindingRecyclerViewAdapter.OnItemClickListener<HomeWanAndroidItemVM>() {
-            @Override
-            public void onClick(ViewDataBinding binding, int position, HomeWanAndroidItemVM item) {
-                AgentWebActivity.loadUrl(getContext(),item.mUrl);
-            }
-        });
-
 
 
     }
