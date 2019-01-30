@@ -18,7 +18,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.library.Utils.CommonUtils;
 import com.example.library.Utils.LogUtlis;
+import com.example.library.view.statusBar.StatusBarUtil;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 import com.just.agentweb.IAgentWebSettings;
@@ -34,8 +37,6 @@ public class AgentWebActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TextView mTitleTextView;
     private AlertDialog mAlertDialog;
-    private String mUrl;
-    private String mTitle;
 
     private SonicImpl mSonicImpl;
 
@@ -81,14 +82,13 @@ public class AgentWebActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mLinearLayout = (LinearLayout) this.findViewById(R.id.container);
-        mToolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        mLinearLayout =  this.findViewById(R.id.container);
+        mToolbar =  this.findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setTitle("");
-        mTitleTextView = (TextView) this.findViewById(R.id.toolbar_title);
+        mTitleTextView =  this.findViewById(R.id.toolbar_title);
         this.setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
-            // Enable the Up button
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -97,6 +97,8 @@ public class AgentWebActivity extends AppCompatActivity {
                 AgentWebActivity.this.finish();
             }
         });
+        StatusBarUtil.setColor(this, CommonUtils.getColor(R.color.colorPrimaryDark), 0);
+
     }
 
     public IAgentWebSettings getSettings() {
@@ -171,6 +173,9 @@ public class AgentWebActivity extends AppCompatActivity {
         mAgentWeb.getWebLifeCycle().onDestroy();
     }
 
+
+    private String mUrl;
+    private String mTitle;
     /**
      * 打开网页:
      *
@@ -180,6 +185,7 @@ public class AgentWebActivity extends AppCompatActivity {
      */
     public static void loadUrl(Context mContext, String mUrl, String mTitle) {
         Intent intent = new Intent(mContext, AgentWebActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("mUrl", mUrl);
         intent.putExtra("mTitle", mTitle == null ? "加载中..." : mTitle);
         mContext.startActivity(intent);
@@ -187,6 +193,7 @@ public class AgentWebActivity extends AppCompatActivity {
 
     public static void loadUrl(Context mContext, String mUrl) {
         Intent intent = new Intent(mContext, AgentWebActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("mUrl", mUrl);
         intent.putExtra("mTitle", "详情");
         mContext.startActivity(intent);

@@ -3,6 +3,7 @@ package com.pax.mvvmsample.app;
 import android.content.Context;
 import android.os.SystemClock;
 
+import com.example.library.Utils.LogUtlis;
 import com.example.library.base.BaseApplication;
 import com.github.moduth.blockcanary.BlockCanary;
 import com.github.moduth.blockcanary.BlockCanaryContext;
@@ -17,6 +18,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.smtt.sdk.QbSdk;
 
 public class MyApplication extends BaseApplication {
 
@@ -28,8 +30,48 @@ public class MyApplication extends BaseApplication {
     }
 
     private void init() {
-        //initCanary();
         initBugly();
+        initBlockCanary();
+       // initLeakCanary();
+        initX5();
+    }
+
+    private void initX5() {
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                // TODO Auto-generated method stub
+                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                LogUtlis.d( " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+                // TODO Auto-generated method stub
+            }
+        };
+        //x5内核初始化接口
+        QbSdk.initX5Environment(getApplicationContext(),  cb);
+    }
+
+    private void initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
+    }
+
+    private void initBlockCanary() {
+         class AppBlockCanaryContext extends BlockCanaryContext {
+            // path to save log file
+            @Override
+            public String providePath() {
+                return "/mnt/sdcard/";
+            }
+
+        }
+        BlockCanary.install(this, new AppBlockCanaryContext()).start();
     }
 
     private void initBugly() {
@@ -43,22 +85,7 @@ public class MyApplication extends BaseApplication {
 //        CrashReport.testJavaCrash();
     }
 
-    private void initCanary() {
-        BlockCanary.install(this, new AppBlockCanaryContext()).start();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        LeakCanary.install(this);
-    }
 
-    public class AppBlockCanaryContext extends BlockCanaryContext {
-        // path to save log file
-        @Override
-        public String providePath() {
-            return "/mnt/sdcard/";
-        }
-
-    }
 
 
 }

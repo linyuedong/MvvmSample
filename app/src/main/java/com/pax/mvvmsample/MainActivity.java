@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.library.Utils.RxUtils;
+import com.noober.background.BackgroundLibrary;
 import com.pax.mvvmsample.http.ApiHelper;
 import com.pax.mvvmsample.http.bean.wanAndroid.BannerBean;
 import com.pax.mvvmsample.http.bean.wanAndroid.WanAndroidResponse;
@@ -40,6 +41,7 @@ import com.youth.banner.loader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.reactivex.disposables.Disposable;
 
 
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity  {
     @SuppressLint("AutoDispose")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        BackgroundLibrary.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button bt1 = (Button) findViewById(R.id.bt1);
@@ -89,107 +92,25 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
         Test.test();
-        //test();
-        testRecycle();
+        testDetail();
 
     }
 
-    private void testRecycle() {
-//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-////        LinearLayoutManager layoutManager = new LinearLayoutManager(this );
-//////设置布局管理器
-////        recyclerView.setLayoutManager(layoutManager);
-//////设置为垂直布局，这也是默认的
-////        layoutManager.setOrientation(OrientationHelper. VERTICAL);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//        recyclerView.setLayoutManager(layoutManager);
-//        final MyBaseBindingRecyclerViewAdapter<HomeWanAndroidItemVM> adapter = new MyBaseBindingRecyclerViewAdapter<HomeWanAndroidItemVM>(this) {
-//            @Override
-//            protected int getLayoutResId(int viewType) {
-//                return R.layout.mytest;
-//            }
-//
-//            @Override
-//            protected int getItemVariableId() {
-//                return BR.test;
-//            }
-//        };
-//
-//        LinearLayout mHeaderGroup = ((LinearLayout) LayoutInflater.from(this).inflate(R.layout.head_banner, null));
-//        final Banner banner = mHeaderGroup.findViewById(R.id.test_banner);
-//        mHeaderGroup.removeView(banner);
-//        adapter.setHeaderView(banner);
-//        recyclerView.setAdapter(adapter);
-//
-//
-//        ApiHelper.getWanAndroidApis().getHomeBannerList().compose(RxUtils.<WanAndroidResponse<List<BannerBean>>>rxSchedulersHelper()).subscribe(new io.reactivex.Observer<WanAndroidResponse<List<BannerBean>>>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(WanAndroidResponse<List<BannerBean>> listWanAndroidResponse) {
-//                //view.setText("haha");
-//                List<BannerBean> data = listWanAndroidResponse.getData();
-//                if(data != null && data.size() > 0){
-//                    ArrayList<String> imageUrls = new ArrayList<>();
-//                    ArrayList<String> titles = new ArrayList<>();
-//
-//                    for(int i = 0; i < data.size();i ++){
-//                        imageUrls.add(data.get(i).getImagePath());
-//                        titles.add(data.get(i).getTitle());
-//                        adapter.getItems().add(new HomeWanAndroidItemVM(data.get(i).getTitle()));
-//                    }
-//
-//
-//                    //设置banner样式
-//                    banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE);
-//                    //设置图片加载器
-//                    banner.setImageLoader(new GlideImageLoader());
-//                    //设置图片集合
-//                    banner.setImages(imageUrls);
-//                    //banner设置方法全部调用完毕时最后调用
-//                    //设置banner动画效果
-//                    banner.setBannerAnimation(Transformer.DepthPage);
-//                    //设置标题集合（当banner样式有显示title时）
-//                    banner.setBannerTitles(titles);
-//                    //设置自动轮播，默认为true
-//                    banner.isAutoPlay(true);
-//                    //设置轮播时间
-//                    banner.setDelayTime(1500);
-//                    //设置指示器位置（当banner模式中有指示器时）
-//                    banner.setIndicatorGravity(BannerConfig.CENTER);
-//                    //banner设置方法全部调用完毕时最后调用
-//                    banner.start();
-//                    adapter.notifyDataSetChanged();
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
+    private void testDetail() {
+        TextView tvComment = findViewById(R.id.tvComment);
+        ImageView ivMessage = findViewById(R.id.ivMessage);
+        ImageView ivCollection = findViewById(R.id.iv_collection);
+        ImageView ivLike = findViewById(R.id.iv_like);
+        ImageView ivSend = findViewById(R.id.iv_send);
 
+        ivCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
-
-
-    public void test(){
-        //Toast.makeText(this,"hh",Toast.LENGTH_SHORT).show();
-
-
-
-    }
-
 
 
 }

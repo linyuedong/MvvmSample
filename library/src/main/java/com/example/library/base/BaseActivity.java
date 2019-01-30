@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.library.Utils.CommonUtils;
 import com.example.library.databinding.ActivityBaseBinding;
 import com.example.library.R;
 import com.example.library.view.statusBar.StatusBarUtil;
@@ -47,7 +48,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         RelativeLayout mContainer = (RelativeLayout) mBaseBinding.getRoot().findViewById(R.id.container);
         mContainer.addView(mBinding.getRoot(),params);
         setToolBar();
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimaryDark), 0);
+        StatusBarUtil.setColor(this, CommonUtils.getColor(R.color.colorPrimaryDark), 0);
 
     }
 

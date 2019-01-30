@@ -34,15 +34,15 @@ public interface GankApis {
     Observable<GankHttpResponse<List<GankItemBean>>> getGirlList(@Path("num") int num, @Path("page") int page);
 
     /**
-     * 随机妹纸图
-     */
-    @GET("random/data/福利/{num}")
-    Flowable<GankHttpResponse<List<GankItemBean>>> getRandomGirl(@Path("num") int num);
-
-    /**
      * 搜索
      */
     @GET("search/query/{query}/category/{type}/count/{count}/page/{page}")
-    Flowable<GankHttpResponse<List<GankSearchItemBean>>> getSearchList(@Path("query") String query, @Path("type") String type, @Path("count") int num, @Path("page") int page);
+    Observable<GankHttpResponse<List<GankSearchItemBean>>> getSearchList(@Path("query") String query, @Path("type") String type, @Path("count") int num, @Path("page") int page);
+
+    /**
+     * 获取特定日期干货
+     * http://gank.io/api/history/content/day/2016/05/11
+     */
+
 
 }

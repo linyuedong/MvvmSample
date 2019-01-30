@@ -54,4 +54,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <View android:layout_height="1px" android:background="@android:color/darker_gray" android:layout_width="match_parent"></View>
+
+
+    <include layout="@layout/view_bottom_detail"></include>
+
 </LinearLayout>

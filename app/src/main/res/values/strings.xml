@@ -12,4 +12,5 @@
     <string name="title_activity_sample_home">SampleHomeActivity</string>
     <string name="title_activity_big_photo">BigPhotoActivity</string>
     <string name="title_activity_agent_web">AgentWebActivity</string>
+    <string name="title_activity_x5_web">X5WebActivity</string>
 </resources>

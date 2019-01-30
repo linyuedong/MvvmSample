@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="40dp"
+              android:background="@color/white"
+              android:orientation="horizontal"
+              >
+
+
+    <LinearLayout
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+        android:paddingRight="25dp">
+
+        <TextView
+            android:id="@+id/tvComment"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="写评论..."
+            android:textSize="12dp"
+            app:bl_corners_radius="20dp"
+            app:bl_solid_color="@color/colorPrimary"
+            app:bl_stroke_color="@color/colorPrimaryDark"
+            app:bl_stroke_width="1dp"
+            tools:ignore="MissingPrefix"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/ivMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="2dp"
+            app:srcCompat="@drawable/ic_message"/>
+
+        <ImageView
+            android:id="@+id/iv_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="2dp"
+            app:srcCompat="@drawable/ic_collection3"/>
+
+        <ImageView
+            android:id="@+id/iv_like"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="2dp"
+            app:srcCompat="@drawable/ic_like4"/>
+
+        <ImageView
+            android:id="@+id/iv_send"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="2dp"
+            app:srcCompat="@drawable/ic_send2"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

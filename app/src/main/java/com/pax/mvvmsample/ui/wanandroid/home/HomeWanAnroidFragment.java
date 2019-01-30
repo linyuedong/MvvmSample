@@ -5,10 +5,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.library.base.BaseFragment;
@@ -118,6 +115,8 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
 
     private void initRecycleView() {
         RecyclerView recyclerView = mBinding.recyclerView;
+        recyclerView.setNestedScrollingEnabled(false);
+        banner = mBinding.homeBanner;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new MyBaseBindingRecyclerViewAdapter<HomeWanAndroidItemVM>(getActivity()) {
@@ -137,10 +136,13 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
                 return BR.item;
             }
         };
-        LinearLayout mHeaderGroup = ((LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.head_banner, null));
-        banner = mHeaderGroup.findViewById(R.id.head_banner);
-        mHeaderGroup.removeView(banner);
-        adapter.setHeaderView(banner);
+
+        //Banner使用增加头部的方法刷新会自动上滑，改用ScrollView嵌套Banner和Recyclerview后滑动卡顿，解决方法：https://blog.csdn.net/qq_40848783/article/details/80068735
+//        LinearLayout mHeaderGroup = ((LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.head_banner, null));
+//        banner = mHeaderGroup.findViewById(R.id.head_banner);
+//        mHeaderGroup.removeView(banner);
+//        adapter.setHeaderView(banner);
+
         adapter.setItems(mViewModel.items);
         recyclerView.setAdapter(adapter);
 
