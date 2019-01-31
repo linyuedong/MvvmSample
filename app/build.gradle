@@ -82,4 +82,7 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
     implementation files('libs/tbs_sdk_20181106_121046.jar')
 
+    implementation 'com.github.f0ris.sweetalert:library:1.5.6'
+    implementation 'com.github.1em0nsOft:LemonBubble4Android:1.0.13'
+    implementation 'com.sum.slike:library:0.2.1'
 }

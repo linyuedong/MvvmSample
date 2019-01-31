@@ -16,7 +16,17 @@ public class HomeWanAndroidItemVM {
     public String mNiceDate;
     public String mUrl;
 
-   public  BindAction0 cardViewOnClick = new BindAction0() {
+    private  boolean isCollection;
+
+    public boolean isCollection() {
+        return isCollection;
+    }
+
+    public void setCollection(boolean collection) {
+        isCollection = collection;
+    }
+
+    public  BindAction0 cardViewOnClick = new BindAction0() {
         @Override
         public void call() {
             LogUtlis.i("cardViewOnClick");
@@ -28,6 +38,7 @@ public class HomeWanAndroidItemVM {
         @Override
         public void call() {
             LogUtlis.i("collectionOnClick");
+
 
         }
     };

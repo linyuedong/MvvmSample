@@ -2,15 +2,22 @@ package com.pax.mvvmsample.ui.wanandroid.home;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.databinding.ViewDataBinding;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.library.Utils.ToastUtils;
 import com.example.library.base.BaseFragment;
 import com.example.library.base.adpter.BindingViewHolder;
 import com.example.library.base.adpter.MyBaseBindingRecyclerViewAdapter;
+import com.jakewharton.rxbinding3.view.RxView;
 import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.component.agentweb.AgentWebActivity;
@@ -26,6 +33,11 @@ import com.youth.banner.loader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import kotlin.Unit;
 
 
 public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBinding, HomeWandroidVM> {
@@ -38,6 +50,7 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
             R.drawable.ic_girl_one,R.drawable.ic_girl_two,R.drawable.ic_girl_three,R.drawable.ic_girl_four,R.drawable.ic_girl_five};
 
     Random random = new Random();
+
     public HomeWanAnroidFragment() {
 
     }
@@ -124,6 +137,28 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
             protected void convert(BindingViewHolder holder, HomeWanAndroidItemVM item, int position) {
                 FragmentHomeWanandroidItemBinding binding = (FragmentHomeWanandroidItemBinding)holder.getBinding();
                 binding.iconAndroidHome.setImageResource(icons[random.nextInt(10)]);
+                RxView.clicks(binding.collectionWan).throttleFirst(200, TimeUnit.MILLISECONDS)
+                        .doOnNext(new Consumer<Unit>() {
+                            @Override
+                            public void accept(Unit unit) throws Exception {
+                                if(item.isCollection()){
+                                    ToastUtils.setGravity(Gravity.CENTER, 0, 0);
+                                    View view1 = ToastUtils.showCustomShort(R.layout.view_toast_collection);
+                                    ((TextView)view1.findViewById(R.id.tvToastCollection)).setText("取消收藏");
+                                    binding.collectionWan.setImageResource(R.drawable.ic_collection);
+                                    item.setCollection(false);
+                                }else{
+                                    ToastUtils.setGravity(Gravity.CENTER, 0, 0);
+                                    View view1 = ToastUtils.showCustomShort(R.layout.view_toast_collection);
+                                    ((TextView)view1.findViewById(R.id.tvToastCollection)).setText("收藏成功");
+                                    binding.collectionWan.setImageResource(R.drawable.ic_collection4);
+                                    item.setCollection(true);
+
+                                }
+                            }
+                        })
+                        .subscribeOn(AndroidSchedulers.mainThread()).subscribe();
+
             }
 
             @Override
@@ -145,6 +180,8 @@ public class HomeWanAnroidFragment extends BaseFragment<FragmentHomeWanAnroidBin
 
         adapter.setItems(mViewModel.items);
         recyclerView.setAdapter(adapter);
+
+
 
 
     }

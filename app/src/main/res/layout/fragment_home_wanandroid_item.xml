@@ -65,7 +65,6 @@
                 </LinearLayout>
 
                 <ImageView
-                    app:bind_onClickCommand="@{item.collectionOnClick}"
                     android:id="@+id/collectionWan"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="4dp"
