@@ -89,4 +89,8 @@ dependencies {
     //lottie
     api 'com.airbnb.android:lottie:2.7.0'
 
+    //fragmentation
+    api 'me.yokeyword:fragmentation-core:1.3.6'
+
+
 }
