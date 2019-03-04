@@ -8,6 +8,7 @@ import com.example.library.base.BaseApplication;
 import com.github.moduth.blockcanary.BlockCanary;
 import com.github.moduth.blockcanary.BlockCanaryContext;
 import com.pax.mvvmsample.R;
+import com.pax.mvvmsample.http.ApiHelper;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -19,6 +20,8 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
+
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
 public class MyApplication extends BaseApplication {
 
@@ -32,8 +35,17 @@ public class MyApplication extends BaseApplication {
     private void init() {
         initBugly();
         initBlockCanary();
-       // initLeakCanary();
+        initLeakCanary();
         initX5();
+        initRetrofit();
+    }
+
+    private void initRetrofit() {
+        RetrofitUrlManager.getInstance().setDebug(true);
+        //将每个 BaseUrl 进行初始化,运行时可以随时改变 DOMAIN_NAME 对应的值,从而达到切换 BaseUrl 的效果
+        RetrofitUrlManager.getInstance().putDomain(ApiHelper.WANAndroid_DOMAIN_NAME, ApiHelper.APP_WANAndroid_DOMAIN);
+        RetrofitUrlManager.getInstance().putDomain(ApiHelper.GANK_DOMAIN_NAME, ApiHelper.APP_GANK_DOMAIN);
+
     }
 
     private void initX5() {

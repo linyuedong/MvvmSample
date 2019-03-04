@@ -12,6 +12,7 @@ import com.example.library.base.BaseViewModel;
 import com.example.library.base.adpter.BaseRecycleViewAdapter;
 import com.example.library.binding.command.BindAction0;
 import com.example.library.bus.event.SingleLiveEvent;
+import com.example.library.http.RetrofitHelper;
 import com.pax.mvvmsample.BR;
 import com.pax.mvvmsample.R;
 import com.pax.mvvmsample.http.ApiHelper;
@@ -20,7 +21,11 @@ import com.pax.mvvmsample.http.response.GankHttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
+import io.rx_cache2.DynamicKey;
+import io.rx_cache2.EvictDynamicKey;
+import io.rx_cache2.EvictProvider;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class AndroidViewModel extends BaseViewModel {
@@ -55,44 +60,51 @@ public class AndroidViewModel extends BaseViewModel {
         @Override
         public void call() {
             page++;
-            ApiHelper.getGankApis().getTechList(TECH, NUM, page)
-                    .compose(RxUtils.<GankHttpResponse<List<GankItemBean>>>rxErrorHelper())
-                    .compose(RxUtils.<GankHttpResponse<List<GankItemBean>>>rxSchedulersHelper())
-                    .as(RxUtils.<GankHttpResponse<List<GankItemBean>>>bindLifecycle(AndroidViewModel.this.getLifeCycle()))
-                    .subscribe(new Consumer<GankHttpResponse<List<GankItemBean>>>() {
-                        @Override
-                        public void accept(GankHttpResponse<List<GankItemBean>> listGankHttpResponse) throws Exception {
-                            showContentView();
-                            List<GankItemBean> results = listGankHttpResponse.getResults();
-                            if (transformData(results)) {
+            loadMoreData();
 
-                                finishLoadMore(true);
-                            } else {
-
-
-                                finishLoadMore(false);
-                            }
-
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            showErrorView();
-                            if (page > 1) {
-                                page--;
-                            }
-                            finishLoadMore(false);
-                            showErrorSnackBar(throwable);
-
-                        }
-                    });
         }
     };
 
+    private void loadMoreData() {
+        Observable<GankHttpResponse<List<GankItemBean>>> techList = ApiHelper.getGankApis().getTechList(TECH, NUM, page);
+        Observable<GankHttpResponse<List<GankItemBean>>> techListCache = ApiHelper.getGankCache().getTechList(techList, new DynamicKey(TECH+page), new EvictDynamicKey (false));
+        techListCache.compose(RxUtils.<GankHttpResponse<List<GankItemBean>>>rxErrorHelper())
+                .compose(RxUtils.<GankHttpResponse<List<GankItemBean>>>rxSchedulersHelper())
+                .as(RxUtils.<GankHttpResponse<List<GankItemBean>>>bindLifecycle(AndroidViewModel.this.getLifeCycle()))
+                .subscribe(new Consumer<GankHttpResponse<List<GankItemBean>>>() {
+                    @Override
+                    public void accept(GankHttpResponse<List<GankItemBean>> listGankHttpResponse) throws Exception {
+                        showContentView();
+                        List<GankItemBean> results = listGankHttpResponse.getResults();
+                        if (transformData(results)) {
+
+                            finishLoadMore(true);
+                        } else {
+
+
+                            finishLoadMore(false);
+                        }
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        showErrorView();
+                        if (page > 1) {
+                            page--;
+                        }
+                        finishLoadMore(false);
+                        //showErrorSnackBar(throwable);
+
+                    }
+                });
+    }
+
 
     public void loadAndroidData() {
-        ApiHelper.getGankApis().getTechList(TECH, NUM, page)
-                .compose(RxUtils.<GankHttpResponse<List<GankItemBean>>>rxErrorHelper())
+        Observable<GankHttpResponse<List<GankItemBean>>> techList = ApiHelper.getGankApis().getTechList(TECH, NUM, page);
+        Observable<GankHttpResponse<List<GankItemBean>>> techListCache = ApiHelper.getGankCache().getTechList(techList, new DynamicKey(TECH+page), new EvictDynamicKey(true));
+        techListCache.compose(RxUtils.<GankHttpResponse<List<GankItemBean>>>rxErrorHelper())
                 .compose(RxUtils.<GankHttpResponse<List<GankItemBean>>>rxSchedulersHelper())
                 .as(RxUtils.<GankHttpResponse<List<GankItemBean>>>bindLifecycle(AndroidViewModel.this.getLifeCycle()))
                 .subscribe(new Consumer<GankHttpResponse<List<GankItemBean>>>() {
@@ -117,7 +129,7 @@ public class AndroidViewModel extends BaseViewModel {
                             page--;
                         }
                         finishRefresh(false);
-                        showErrorSnackBar(throwable);
+                        //showErrorSnackBar(throwable);
                     }
                 });
 

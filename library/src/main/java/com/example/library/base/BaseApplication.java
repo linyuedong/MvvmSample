@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.library.Utils.Utils;
 import com.example.library.Utils.LogUtlis;
+import com.example.library.component.ActivityLifecycle;
 import com.github.naturs.logger.Logger;
 import com.github.naturs.logger.android.adapter.AndroidLogAdapter;
 import com.github.naturs.logger.android.strategy.converter.AndroidLogConverter;
@@ -17,7 +18,7 @@ public class BaseApplication extends Application {
 
     private static Application mApplication;
     private static boolean debug = false;
-   ;
+
 
     @Override
     public void onCreate() {
@@ -25,7 +26,7 @@ public class BaseApplication extends Application {
         mApplication = this;
         initDebugStatus();
         initLogger();
-        initActivityLifecycle();
+        //registerActivityLifecycleCallbacks(new ActivityLifecycle());
         Utils.init(mApplication);
     }
 
@@ -58,46 +59,7 @@ public class BaseApplication extends Application {
     }
 
 
-    private void initActivityLifecycle() {
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle bundle) {
-                LogUtlis.d("onCreate : " + activity.getClass().getSimpleName());
-                AppManager.getAppManager().addActivity(activity);
-            }
 
-            @Override
-            public void onActivityStarted(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
-
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-                LogUtlis.d("onActivityDestroyed : " + activity.getClass().getSimpleName());
-                AppManager.getAppManager().finishActivity(activity);
-            }
-        });
-    }
 
     public static Application getContext(){
         return mApplication;
